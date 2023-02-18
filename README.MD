@@ -1,4 +1,8 @@
+# Fullstack Open 
+##Information for Reviewee(?)
 Work for review (clean and nice) - is on master.
+
+## NOTES FOR MYSELF:
 
 Work for myself and learning purposes (more comments, explanations, perhaps additional directories where I test stuff) - is on master-dirty.
 
