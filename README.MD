@@ -6,15 +6,15 @@ Another branches are for learning purposes so they might be messy :) (more comme
 ## Notes for myself:
 ### Git-workflow: (shown by example)
 #### A. Starting out.
-'1. Your master and master-dirty are the same. 
-'2. Checkout to master-dirty, in case they were not (master-dirty is fuller version of master).
-'3. Checkout to new branch, e.g. part0. You should commit, and you can push (e.g. so you could work from another pc etc.)
-'4. When work is done, you: 
-    '4.1. merge part0 with master-dirty (assuming part0 has lots of comments, maybe more directories etc.)
-        '4.1.1. git checkout to where you want to merge INTO (git checkout master-dirty) and then merge (git merge part0 (git merge WHERE_FROM)). Master-dirty should now contain whatever was there previously AND new part0.
-    '4.2. checkout to part0 to clean it up - so it's presentable and merge it with master (the clean one). Steps similiar/the same as above.
-    '4.3. delete branch part0 locally and the remote.
-'5. You now have master with clean part0 and master-dirty with dirty part0.
+'1. Your master and master-dirty are the same. <br>
+'2. Checkout to master-dirty, in case they were not (master-dirty is fuller version of master).<br>
+'3. Checkout to new branch, e.g. part0. You should commit, and you can push (e.g. so you could work from another pc etc.)<br>
+'4. When work is done, you: <br>
+    '4.1. merge part0 with master-dirty (assuming part0 has lots of comments, maybe more directories etc.)<br>
+        '4.1.1. git checkout to where you want to merge INTO (git checkout master-dirty) and then merge (git merge part0 (git merge WHERE_FROM)). Master-dirty should now contain whatever was there previously AND new part0.<br>
+    '4.2. checkout to part0 to clean it up - so it's presentable and merge it with master (the clean one). Steps similiar/the same as above.<br>
+    '4.3. delete branch part0 locally and the remote.<br>
+'5. You now have master with clean part0 and master-dirty with dirty part0.<br>
 #### B. Further work (listing this just so I can see if my reasoning is correct).
 1. Your master and master-dirty are DIFFERENT.
 2. Checkout to master-dirty, so you work on fuller version (comments, testing stuff etc.)
