@@ -6,7 +6,7 @@ Another branches are for learning purposes so they might be messy :) (more comme
 ## Notes for myself:
 ### Git-workflow: (shown by example)
 A. Starting out.<br>
-&nbsp;&nbsp;1\. Your master and master-dirty are the same.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1\. Your master and master-dirty are the same.<br>
 2\. Checkout to master-dirty, in case they were not (master-dirty is fuller version of master).<br>
 3\. Checkout to new branch, e.g. part0. You should commit, and you can push (e.g. so you could work from another pc etc.)<br>
 4\. When work is done, you:<br> 
