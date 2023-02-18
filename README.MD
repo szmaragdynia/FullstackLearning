@@ -5,10 +5,10 @@ On branch master is work for review - clean and nice.<br>
 Another branches are for learning purposes so they might be messy :) (more comments, explanations, perhaps additional directories to check how stuff works or some edge cases etc.)
 ## Notes for myself:
 ### Git-workflow: (shown by example)
-#### A. Starting out.
-1. Your master and master-dirty are the same. 
-2. Checkout to master-dirty, in case they were not (master-dirty is fuller version of master).
-3. Checkout to new branch, e.g. part0. You should commit, and you can push (e.g. so you could work from another pc etc.)
+A. Starting out.<br>
+1\. Your master and master-dirty are the same.<br>
+2\. Checkout to master-dirty, in case they were not (master-dirty is fuller version of master).<br>
+3\. Checkout to new branch, e.g. part0. You should commit, and you can push (e.g. so you could work from another pc etc.)<br>
 4. When work is done, you: 
 
 	4.1. merge part0 with master-dirty (assuming part0 has lots of comments, maybe more directories etc.)
