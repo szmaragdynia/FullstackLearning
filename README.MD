@@ -1,6 +1,7 @@
 # Fullstack Open 
-##Information for Reviewee(?)
-Work for review (clean and nice) - is on master.
+## Information for Reviewer
+On branch master is work for review - clean and nice.
+Another branches are for learning purposes so they might be messy :)
 
 ## NOTES FOR MYSELF:
 
