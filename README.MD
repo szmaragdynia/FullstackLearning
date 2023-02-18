@@ -1,13 +1,10 @@
 # Fullstack Open 
-## Information for Reviewer(?)
+This repo contains all the excercises and everything else regarding my learning path, learning from the Fullstack Open, from the University of Helsinki.<br><br>
+
 On branch master is work for review - clean and nice.<br>
-Another branches are for learning purposes so they might be messy :)
-
-## NOTES FOR MYSELF:
-Work for myself and learning purposes (more comments, explanations, perhaps additional directories where I test stuff) - is on master-dirty.
-
-NOTES FOR MYSELF:
-Git-workflow is: (shown by example)
+Another branches are for learning purposes so they might be messy :) (more comments, explanations, perhaps additional directories to check how stuff works or some edge cases etc.)
+## Notes for myself:
+Git-workflow: (shown by example)
 	A. Starting out.
 		1. Your master and master-dirty are the same. 
 		2. Checkout to master-dirty, in case they were not (master-dirty is fuller version of master).
