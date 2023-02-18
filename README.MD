@@ -6,7 +6,7 @@ Another branches are for learning purposes so they might be messy :) (more comme
 ## Notes for myself:
 ### Git-workflow: (shown by example)
 A. Starting out.<br>
-1\. Your master and master-dirty are the same.<br>
+&nbsp;1\. Your master and master-dirty are the same.<br>
 2\. Checkout to master-dirty, in case they were not (master-dirty is fuller version of master).<br>
 3\. Checkout to new branch, e.g. part0. You should commit, and you can push (e.g. so you could work from another pc etc.)<br>
 4\. When work is done, you:<br> 
@@ -15,7 +15,8 @@ A. Starting out.<br>
 4.2\. checkout to part0 to clean it up - so it's presentable and merge it with master (the clean one). Steps similiar/the same as above.<br>
 4.3\. delete branch part0 locally and the remote.<br>
 5\. You now have master with clean part0 and master-dirty with dirty part0.<br>
-#### B. Further work (listing this just so I can see if my reasoning is correct).
+
+B. Further work (listing this just so I can see if my reasoning is correct).<br>
 1\. Your master and master-dirty are DIFFERENT.<br>
 2\. Checkout to master-dirty, so you work on fuller version (comments, testing stuff etc.)<br>
 3\. Checkout to new branch, e.g. part1. You should commit, and you can push (e.g. so you could work from another pc etc.)<br>
