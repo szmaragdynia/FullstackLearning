@@ -1,10 +1,9 @@
 # Fullstack Open 
-## Information for Reviewer
-On branch master is work for review - clean and nice.
+## Information for Reviewer(?)
+On branch master is work for review - clean and nice.<br>
 Another branches are for learning purposes so they might be messy :)
 
 ## NOTES FOR MYSELF:
-
 Work for myself and learning purposes (more comments, explanations, perhaps additional directories where I test stuff) - is on master-dirty.
 
 NOTES FOR MYSELF:
