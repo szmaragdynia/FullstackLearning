@@ -27,3 +27,6 @@ Another branches are for learning purposes so they might be messy :) (more comme
     2.  checkout to part1 to clean it up - so it's presentable and merge it with master (the clean one). Steps similiar/the same as above.
     3. delete branch part1 locally and the remote.
 5. You now have master with clean part0 and part1 and master-dirty with dirty part0 and part1.
+
+### Details: 
+Directories not to be contained in clean repos are starting with number 0 (e.g. 0-mdn-forms)
