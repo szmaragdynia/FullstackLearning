@@ -1,0 +1,23 @@
+Create a similar diagram depicting the situation where the user creates a new note on the page https://studies.cs.helsinki.fi/exampleapp/notes by writing something into the text field and clicking the submit button.
+
+button is clicked:
+browser -> post https.../tak_jak_w_form-action (user input is sent) -> server
+
+server -> http status code 302 redirect (to oneself) [do new http get] -> browser
+
+
+1. browser-> server: fetching the html from the server using HTTP GET request
+2. server -> browser: sending the HTML document from the url
+
+3. browser: parsing html.
+    4. Found css link. browser-> server: fetch the css from the server using HTTP GET request.
+    5. server->browser: sending the css file from the url
+6. parsing html further
+    7. Found script "link". browser->server: fetch the js file from the server using HTTP GET request.
+    8. server->Browser: sending the js file
+
+
+>>get css?
+
+<<css
+
