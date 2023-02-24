@@ -1,7 +1,11 @@
 Create a similar diagram depicting the situation where the user creates a new note on the page https://studies.cs.helsinki.fi/exampleapp/notes by writing something into the text field and clicking the submit button.
 
+
+
+
 button is clicked:
-browser -> post https.../tak_jak_w_form-action (user input is sent) -> server
+
+-1. browser->server: sending the data (note) using HTTO POST (at url specified in form's action field) 
 
 server -> http status code 302 redirect (to oneself) [do new http get] -> browser
 
@@ -15,9 +19,11 @@ server -> http status code 302 redirect (to oneself) [do new http get] -> browse
 6. parsing html further
     7. Found script "link". browser->server: fetch the js file from the server using HTTP GET request.
     8. server->Browser: sending the js file
+        9.browser executing js code
+            10. found need to fetch some file in js code. browser->server: fetch that file from the server using HTTP GET request.
+            11. server->browser: sending the file from the server
+            12. browser conitnues to execute js code - executes the callback function that renders the notes (it was if-walled after data is fetched) - which renders notes.
 
 
->>get css?
 
-<<css
 
