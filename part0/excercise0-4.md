@@ -4,6 +4,9 @@ sequenceDiagram
     participant s as Server
     
     Note over b: User presses "Submit" button.
+    
+    b->>s: Sending the data (note) using <br/> HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note <br/> (url specified in form's action field) 
+    s->>b: HTTP status code 302: redirect to https://studies.cs.helsinki.fi/exampleapp/notes <br/> (Redirection to specific url is demanded from the server side) <br/> (This redirection is basically asking the browser to do a new HTTP GET]
 
     b->>s: GET https://studies.cs.helsinki.fi/exampleapp/notes
     s-->>b: HTML document
