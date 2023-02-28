@@ -1,6 +1,7 @@
 ```mermaid
 sequenceDiagram
-    
+    Note right of browser: User presses "Submit" button.
+
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     server-->>browser: HTML document
     
