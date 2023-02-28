@@ -1,4 +1,6 @@
 ```mermaid
+%%{init: {'theme':'forest'}}%%
+
 sequenceDiagram
     participant b as Browser
     participant s as Server
