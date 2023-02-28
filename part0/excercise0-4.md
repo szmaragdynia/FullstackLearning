@@ -1,9 +1,8 @@
 ```mermaid
-%%{
-    init: {
-        'theme':'base'
-    }
-}%%
+
+.actor {
+    stroke: #000000;
+}
 
 sequenceDiagram
     participant b as Browser
