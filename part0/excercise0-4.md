@@ -1,4 +1,4 @@
-```
+```ruby
 sequenceDiagram
     participant browser
     participant server
