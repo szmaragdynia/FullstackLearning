@@ -3,10 +3,6 @@
 
 
 sequenceDiagram
-
-.actor {
-    stroke: #000000;
-}
     participant b as Browser
     participant s as Server
     
