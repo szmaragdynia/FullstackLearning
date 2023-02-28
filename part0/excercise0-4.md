@@ -1,10 +1,12 @@
 ```mermaid
 
+
+
+sequenceDiagram
+
 .actor {
     stroke: #000000;
 }
-
-sequenceDiagram
     participant b as Browser
     participant s as Server
     
