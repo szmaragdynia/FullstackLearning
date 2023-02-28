@@ -19,21 +19,21 @@ sequenceDiagram
     b->>s: GET https://studies.cs.helsinki.fi/exampleapp/notes
     deactivate b
     activate s
-    s-->>b: HTML document
+    s-)b: HTML document
     deactivate s
     
     activate b
     b->>s: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     deactivate b
     activate s
-    s-->>b: the css file
+    s-)b: the css file
     deactivate s
     
     activate b
     b->>s: GET https://studies.cs.helsinki.fi/exampleapp/main.js
     deactivate b
     activate s
-    s-->>b: the JavaScript file
+    s-)b: the JavaScript file
     deactivate s
     
     Note right of b: The browser starts executing the JavaScript code that fetches the JSON from the server
@@ -42,7 +42,7 @@ sequenceDiagram
     b->>s: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     deactivate b
     activate s
-    s-->>b: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    s-)b: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
     deactivate s
 
     Note right of b: The browser executes the callback function that renders the notes
