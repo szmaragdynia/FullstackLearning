@@ -6,9 +6,7 @@ Create a similar diagram depicting the situation where the user creates a new no
 button is clicked:
 
 -1. browser->server: sending the data (note) using HTTO POST (at url specified in form's action field) 
-
-server -> http status code 302 redirect (to oneself) [do new http get] -> browser
-
+server->browser: http status code 302 redirect (to oneself) [server asks browser to do new http get]
 
 1. browser-> server: fetching the html from the server using HTTP GET request
 2. server -> browser: sending the HTML document from the url
@@ -22,7 +20,7 @@ server -> http status code 302 redirect (to oneself) [do new http get] -> browse
         9.browser executing js code
             10. found need to fetch some file in js code. browser->server: fetch that file from the server using HTTP GET request.
             11. server->browser: sending the file from the server
-            12. browser conitnues to execute js code - executes the callback function that renders the notes (it was if-walled after data is fetched) - which renders notes.
+            12. browser conitnues to execute js code - executes the callback function in js file that renders the notes  (it was if-walled after data is fetched).
 
 
 
