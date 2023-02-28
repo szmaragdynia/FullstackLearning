@@ -1,9 +1,9 @@
 ```mermaid
 sequenceDiagram
-    participant b as browser
-    participant s as server
+    participant b as Browser
+    participant s as Server
     
-    Note right of browser: User presses "Submit" button.
+    Note over browser: User presses "Submit" button.
 
     b->>s: GET https://studies.cs.helsinki.fi/exampleapp/notes
     s-->>b: HTML document
