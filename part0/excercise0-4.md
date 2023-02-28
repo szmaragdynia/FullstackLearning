@@ -1,5 +1,9 @@
 ```mermaid
-%%{init: {'theme':'forest'}}%%
+%%{
+    init: {
+        'theme':'base'
+    }
+}%%
 
 sequenceDiagram
     participant b as Browser
