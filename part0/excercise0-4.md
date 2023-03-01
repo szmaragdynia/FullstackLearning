@@ -51,6 +51,6 @@ sequenceDiagram
         s-)b: Sending the JSON file from the given url.
     deactivate s
 
-        Note right of b: The browser finishes executing the js file ((it was if-walled after data is fetched)- it executes the callback function from that file that renders the notes by manipulation the DOM with use of the data from JSON.
+        Note right of b: The browser finishes executing the js file <br/> (it was if-walled after data is fetched)- i.e. browser executes the callback function from that file that renders <br/> the notes by manipulation the DOM with use of the data from JSON.
     
 ```
