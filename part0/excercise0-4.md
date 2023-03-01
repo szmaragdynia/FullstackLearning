@@ -16,10 +16,10 @@ sequenceDiagram
     deactivate s
 
     activate b
-    b->>s: GET https://studies.cs.helsinki.fi/exampleapp/notes
+        b->>s: GET https://studies.cs.helsinki.fi/exampleapp/notes
     deactivate b
     activate s
-    s-)b: HTML document
+        s-)b: HTML document
     deactivate s
     
     activate b
