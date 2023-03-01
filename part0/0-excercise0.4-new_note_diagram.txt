@@ -6,18 +6,13 @@ The diagram does not have to be a sequence diagram. Any sensible way of presenti
 
 
 
-
 button is clicked:
 
 -2. browser->server: sending the data (note) using HTTP POST (at url specifed in form's action field) 
 -1. server->browser: http status code 302 redirect (to oneself) [server asks browser to do new http get]
 
-
-
 1. browser-> server: fetching the html from the server using HTTP GET request
 2. server -> browser: sending the HTML document from the url
-
-
 3. browser: parsing html.
     4. Found css link. browser-> server: fetch the css from the server using HTTP GET request.
     5. server->browser: sending the css file from the url

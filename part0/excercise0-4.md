@@ -16,6 +16,7 @@ sequenceDiagram
         s-)b: HTTP status code 302: redirect to https://studies.cs.helsinki.fi/exampleapp/notes <br/> (Redirection to specific url is demanded from the server side) <br/> (This redirection is basically asking the browser to do a new HTTP GET]
     deactivate s
 
+    rect rgb(191, 223, 255)
 
     activate b
         b->>s: Fetching the html from the server using <br/> HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
