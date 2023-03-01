@@ -21,33 +21,36 @@ sequenceDiagram
         b->>s: Fetching the html from the server using <br/> HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
     deactivate b
     activate s
-        s-)b: Sending the HTML document from the requested url.
+        s-)b: Sending the HTML document from the given url.
     deactivate s
 
-    
+        Note over b: Parsing HTML document - found CSS link.
+
     activate b
-        b->>s: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+        b->>s: Fetching the css from the server using <br/> HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
     deactivate b
     activate s
-        s-)b: the css file
-    deactivate s
-    
-    activate b
-        b->>s: GET https://studies.cs.helsinki.fi/exampleapp/main.js
-    deactivate b
-    activate s
-        s-)b: the JavaScript file
-    deactivate s
-    
-        Note right of b: The browser starts executing the JavaScript code that fetches the JSON from the server
-    
-    activate b
-        b->>s: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-    deactivate b
-    activate s
-        s-)b: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+        s-)b: Sending the css file from the given url.
     deactivate s
 
-        Note right of b: The browser executes the callback function that renders the notes
+        Note over b: Further parsing HTML document - found js script link.
+    
+    activate b
+        b->>s: Fetching the js file from the server using <br/> HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    deactivate b
+    activate s
+        s-)b: Sending the JavaScript file from the given url.
+    deactivate s
+
+        Note over b: The browser starts executing the JavaScript code - found need to fetch additional (JSON) file.
+    
+    activate b
+        b->>s:Fetching the JSON file from the server using <br/> HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    deactivate b
+    activate s
+        s-)b: Sending the JSON file from the given url.
+    deactivate s
+
+        Note right of b: The browser finishes executing the js file ((it was if-walled after data is fetched)- it executes the callback function from that file that renders the notes by manipulation the DOM with use of the data from JSON.
     
 ```
