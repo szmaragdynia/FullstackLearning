@@ -42,7 +42,7 @@ sequenceDiagram
         s-)b: Sending the JavaScript file from the given url.
     deactivate s
 
-        Note over b: The browser starts executing the JavaScript code - found need to fetch additional (JSON) file.
+        Note over b: The browser starts executing the JavaScript code <br/>- found need to fetch additional (JSON) file.
     
     activate b
         b->>s:Fetching the JSON file from the server using <br/> HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
