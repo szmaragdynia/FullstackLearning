@@ -17,6 +17,7 @@ button is clicked:
 1. browser-> server: fetching the html from the server using HTTP GET request
 2. server -> browser: sending the HTML document from the url
 
+
 3. browser: parsing html.
     4. Found css link. browser-> server: fetch the css from the server using HTTP GET request.
     5. server->browser: sending the css file from the url

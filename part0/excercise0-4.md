@@ -8,6 +8,7 @@ sequenceDiagram
     
         Note over b: User presses "Submit" button.
     
+
     activate b
         b->>s: Sending the data (note) using <br/> HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note <br/> (url specified in form's action field) 
     deactivate b
@@ -15,12 +16,14 @@ sequenceDiagram
         s-)b: HTTP status code 302: redirect to https://studies.cs.helsinki.fi/exampleapp/notes <br/> (Redirection to specific url is demanded from the server side) <br/> (This redirection is basically asking the browser to do a new HTTP GET]
     deactivate s
 
+
     activate b
-        b->>s: GET https://studies.cs.helsinki.fi/exampleapp/notes
+        b->>s: Fetching the html from the server using <br/> HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
     deactivate b
     activate s
-        s-)b: HTML document
+        s-)b: Sending the HTML document from the requested url.
     deactivate s
+
     
     activate b
         b->>s: GET https://studies.cs.helsinki.fi/exampleapp/main.css
