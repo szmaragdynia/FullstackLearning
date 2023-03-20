@@ -6,7 +6,7 @@ On branch master is work for review - clean and nice.<br>
 Another branches are for learning purposes so they might be messy :) (more comments, explanations, perhaps additional directories to check how stuff works or some edge cases etc.)
 
 ## Notes for myself:
-Part 1 time used so far: 2:45
+Part 1 time used so far: 3:20
 ### Git-workflow: (shown by example)
 #### A. Just  starting out - first part ever etc.
 1. Your master and master-dirty are the same. 
