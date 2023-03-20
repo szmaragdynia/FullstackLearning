@@ -7,46 +7,50 @@ const Header = (props) => (
 const Content = (props) => {
   return (
     <>
-      <Part part={props.part1} exercises={props.exercises1} />
-      <Part part={props.part2} exercises={props.exercises2} />
-      <Part part={props.part3} exercises={props.exercises3} />
+      <Part part={props.part1c} />
+      <Part part={props.part2c} />
+      <Part part={props.part3c} />
     </>
   )
 }
 
+
 const Total = (props) => {
   return (    
-    <>
-      <p>Number of exercises {props.exercises1 + props.exercises2 + props.exercises3}</p>
-      {/* <p>Number of exercises {props.total}</p> */} 
-      {/* The above one was used in pair with a line in App which is commented. */} 
-    </>
+      <p>Number of exercises {props.part1t.exercises + props.part2t.exercises + props.part3t.exercises}</p>
   )
 }
 
 
 const Part = (props) =>{
   return (
-    <p>{props.part} {props.exercises}</p>
+    <p>{props.part.name} {props.part.exercises}</p>
   )
 }
 
+
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10,
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
 
   return (
     <>
       <Header course={course} />
-      <Content part1={part1} exercises1={exercises1} part2={part2} exercises2={exercises2} part3={part3} exercises3={exercises3} />
-      <Total exercises1={exercises1} exercises2={exercises2} exercises3={exercises3}/>
-      {/*<Total total={{exercises1} + {exercises2} + {exercises3}} /> */}
-      {/* The above one is concatenating strings I guess. I would have to toInt them. Discarding that for now.*/} 
+      <Content part1c={parts[0]} part2c={parts[1]} part3c={parts[2]} />
+      <Total part1t={parts[0]} part2t={parts[1]} part3t={parts[2]} />
     </>
   )
 }
