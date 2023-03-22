@@ -26,7 +26,7 @@ console.log("I am " + age + " years old.")  //string concatenation
 console.log(`I am ${age} years old.`) //template literal
 
 
-console.log("---------------------------------------temporal dead zone")
+console.log("---------------------------------------varaiables - temporal dead zone")
 //let and const variables are 'visible' in the entire scope of their declarations, 
 //BUT HAVE NO VALUE ASSIGNED UNTIL THE PROGRAM REACHES THEIR DECLARATION POINT.
 //That is called "temporal dead zone", or TDZ for short.
@@ -200,3 +200,5 @@ the function call to spread the array as a list of elements. For instance: avg(.
 
 /*There's another way that anonymous functions can be useful: it can be simultaneously declared and invoked in a single expression, 
 called an Immediately invoked function expression (IIFE): */
+
+
