@@ -6,10 +6,12 @@ On branch master is work for review - clean and nice.<br>
 Another branches are for learning purposes so they might be messy :) (more comments, explanations, perhaps additional directories to check how stuff works or some edge cases etc.)
 
 ## Notes for myself:
-Part 1 time used so far: 2:45 <br>
-+mon:3:30 (+ maybe 30-50 configuring stuff [downloading node on PC etc.]) <br>
-+tue(mdn's js overview) 4:00 <br>
-+wed 1:00 (yt vid var/let/const). Today giving brain some rest, and tackling everyday small tasks.
+### Part 1 time used so far:
+Prior: 2:45 - part1a I guess<br>
++mon: 3:30 (+ maybe 30-50 configuring stuff [downloading node on PC etc.]). Learning from part1b - and finished. <br>
++tue (mdn's js overview) 4:00 <br>
++wed 1:00 (yt vid var/let/const). Today giving brain some rest, and tackling everyday small tasks. <br>
++thu - I did nothing, I suck!
 ### Git-workflow: (shown by example)
 #### A. Just  starting out - first part ever etc.
 1. Your master and master-dirty are the same. 
