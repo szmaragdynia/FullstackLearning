@@ -8,10 +8,11 @@ Another branches are for learning purposes so they might be messy :) (more comme
 ## Notes for myself:
 ### Part 1 time used so far:
 Prior: 2:45 - part1a I guess<br>
-+mon: 3:30 (+ maybe 30-50 configuring stuff [downloading node on PC etc.]). Learning from part1b - and finished. <br>
-+tue (mdn's js overview) 4:00 <br>
-+wed 1:00 (yt vid var/let/const). Today giving brain some rest, and tackling everyday small tasks. <br>
-+thu - I did nothing, I suck!
++mon: 3:30 (+ maybe 30-50 configuring stuff [downloading node on PC etc.]). Learning from part1b - and finished.<br>
++tue (mdn's js overview) 4:00<br>
++wed 1:00 (yt vid var/let/const). Today giving brain some rest, and tackling everyday small tasks.<br>
++thu - I did nothing, I suck!<br>
++fri: 0:50 + 0:30 fighting with vscode
 ### Git-workflow: (shown by example)
 #### A. Just  starting out - first part ever etc.
 1. Your master and master-dirty are the same. 
