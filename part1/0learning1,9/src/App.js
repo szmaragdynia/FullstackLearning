@@ -1,33 +1,22 @@
-//this filie has been changed even fter 0-8, then we implemented guessing the year and used destructurization.
+{/* leaving this because it marks important understading point for me, but we are changing it 
+const App = (props) => {
+  //const counter = props.counter //either this way (because cant render objects!) or as below:
+  const {counter} = props //counter = props would make 'counter' reference to 'props' object - now we take 
+                          //the first[and here only] property 'props' is holding, and assigning it into 'counter' using destructurization
 
-const Hello = ({name,age}) => {
-  //const name = props.name
-  //const age = props.age
-  //this above equals to the below:
-  //const {name, age} = props
-  //but instead of assigning fetched object props into props variable, and then its properties into name and age variables,
-  //we can omit the first step and just move the above into the function argument
-  const bornYear = () => new Date().getFullYear() - age
-  
-  return (
-    <>
-      <p>Hello {name}, you are {age} years old.</p>
-      <p>So you were probably born in {bornYear()}</p>
-    </>  
-  )
-}
+*/}
+
+import { useState } from 'react'
 
 const App = () => {
-  const name = 'Peter'
-  const age = 10
+  const [counter, setCounter] = useState(0)
+  
 
+  
+  setTimeout(
+    () => 
+  )
   return (
-  <>
-    <h1>Greetings</h1>
-    <Hello name='Maya' age={26 + 10} />
-    <Hello name={name} age={age} />
-    <p>aaaaaaaaaaaaaaaaaaaaa</p>
-  </>
   )
 }
 
