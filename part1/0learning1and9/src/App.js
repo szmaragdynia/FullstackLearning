@@ -16,28 +16,62 @@ const App = () => {
   //the useState function returns an array that contain two items. We assign the items to the variables using destructuring assignment syntax.
   //the counter variable is assigned the initial value of STATE which is zero. 
     //the setCounter variable  is assigned to a function (insidely?) that will be used to MODIFY THE STATE.
-  const [counter, setCounter] = useState(0)
+  const [timeCounter, setTimeCounter] = useState(0)
+  const [buttonCounter, setButtonCounter] = useState(0)
   
-
   //to setTimeout we pass 2 parameters: function to increment the counter STATE, and a timeout of one second.
-            //OK BUT WHERE IS setCounter DEFINITION? look here: https://react.dev/reference/react/useState#setstate
-              //"set functions, like setSomething(nextState)";
-              //"The set function returned by useState lets you update the state to a different value and trigger a re-render."
-                //basically what is says is: you have a STATE and you need a setSTATE function to set state to different value, 
-                  //just type it (or pass a function - some requirements apply)
-
+    //OK BUT WHERE IS setCounter DEFINITION? look here: https://react.dev/reference/react/useState#setstate
+      //"set functions, like setSomething(nextState)";
+      //"The set function returned by useState lets you update the state to a different value and trigger a re-render."
+        //basically what is says is: you have a STATE and you need a setSTATE function to set state to different value, 
+          //just type it (or pass a function - some requirements apply)
   setTimeout(
-    () => setCounter(counter + 1),
+    () => setTimeCounter(timeCounter + 1),
       1000
   )
   //when the state modifying function setCounter is called, REACT RE-RENDERS THE COMPONENT=function body of the component function gets re-executed
     //then useState function return the new value of the state:1 (and so on with every re-render)
   
-  console.log('rendering...', counter)
-  
+  console.log('rendering counter...', timeCounter)
+  console.log('rendering counterButton...', buttonCounter)
+   
+  const increaseByOne = () => setButtonCounter(buttonCounter + 1)
+  const setToZero = () => setButtonCounter(0)
+
   return (
-    <div>{counter}</div>
+    <>
+      <div>Counter: {timeCounter}</div>
+      <div>counterButton: {buttonCounter}</div>
+
+      <button onClick={increaseByOne}> 
+        plus
+      </button> 
+      <button onClick={setToZero}>
+        zero
+      </button>
+    </>
   )
 }
+//"Usually defining event handlers within JSX-templates is not a good idea. Here it's ok, because our event handlers are so simple." (we separated them into separate ff anyway)
+
+//"We define the event handlers for our buttons where we declare their onClick attributes" (onClick is an attribute, it defines what happens when the button is clicked)
+//onClick={} must get (event handler is supposed to be) either a function or function reference
+  //so this would work: "<button onClick={() => setButtonCounter(buttonCounter + 1)}>"  
+  //so this would NOT work (its f. call): "<button onClick={setButtonCounter(buttonCounter + 1)}>"
+    /* 
+    The difference is subtle. In the first example, the anonymous function calling setButtonCounter is passed as an onClick event handler.
+    This tells React to remember it and only call your function when the user clicks the button.
+    ---
+    In the second example, function in the {} is fired immediately during rendering, without any clicks, because JavaScript inside the JSX { and } executes right away.
+     
+    EDITED to apply to my example and taken from: https://react.dev/learn/responding-to-events
+    */
+  //additionaly this would work: "const asd = () => {setButtonCounter(buttonCounter +1)};" " <button onClick={asd}>"
+  //but this would not work: "const asd = setButtonCounter(buttonCounter +1);"
+    //probably because this is per se ref. to f. call, not f. while the former is ref. to f., which makes f. call. I dunno if js "differentiates" this. Leaving for now...
+  
+  
+
+
 
 export default App
