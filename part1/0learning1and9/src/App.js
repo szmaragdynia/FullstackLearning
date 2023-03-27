@@ -1,3 +1,5 @@
+//this can and should be considered learning9-2
+
 //"It's recommended to write React components that are small and reusable across the application and even across projects."
 //this part reflects changes made in part1c - "passing state" - we refactored code, also I deleted timer counter, because we got rid of it when we implemented buttons, but I had not deleted it back then.
 //"However, be careful to not oversimplify your components, as this makes adding complexity a more tedious task down the road."
