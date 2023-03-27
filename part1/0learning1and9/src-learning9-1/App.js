@@ -52,7 +52,7 @@ const App = () => {
     </>
   )
 }
-//"Usually defining event handlers within JSX-templates is not a good idea. Here it's ok, because our event handlers are so simple." (we separated them into separate ff anyway)
+
 
 //"We define the event handlers for our buttons where we declare their onClick attributes" (onClick is an attribute, it defines what happens when the button is clicked)
 //onClick={} must get (event handler is supposed to be) either a function or function reference
@@ -70,6 +70,7 @@ const App = () => {
   //but this would not work: "const asd = setButtonCounter(buttonCounter +1);"
     //probably because this is per se ref. to f. call, not f. while the former is ref. to f., which makes f. call. I dunno if js "differentiates" this. Leaving for now...
   
+//"Usually defining event handlers within JSX-templates is not a good idea. Here it's ok, because our event handlers are so simple." (we separated them into separate ff anyway)
   
 
 
