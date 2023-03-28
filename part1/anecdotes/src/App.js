@@ -32,7 +32,6 @@ const App = () => {
       <button onClick={() => generateRandomIndex(anecdotes.length)}>Random next anecdote</button>
       <button onClick={() => updatePoints(selected)}>Vote +1 for this one!</button>
       <p>has {points[selected]} votes.</p>
-      {/* console.log(points) */}
       
       <h2>Anecdote with most votes</h2>
       <p>{anecdotes[mostVotedIndex]}</p>

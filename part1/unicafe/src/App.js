@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
-
 const Statistics = (props) => {
-  // I don't need 'total' state, because if good,bad,neutral states are correct at the point of adding them etc., then the variable consisting of them will be as well.
   const total = props.good + props.neutral + props.bad
   console.log(total)
   if (total === 0) {
@@ -21,6 +19,7 @@ const Statistics = (props) => {
     </table>
   )
 } 
+
 const StatisticLine = (props) => {
   return (
     <tr>
@@ -29,11 +28,10 @@ const StatisticLine = (props) => {
     </tr>
   )
 }
+
 const Button = (props) => <button onClick={props.handleClick}>{props.text}</button>
 
-
 const App = () => {
-  // save clicks of each button to its own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
