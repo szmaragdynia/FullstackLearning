@@ -27,7 +27,7 @@ const App = () => {
   //"allClicks.push('L')" appears to work HOWEVER THIS MUTATES THE STATE DIRECTLY - don't do this unless you want very hard debugging (and bad code)
   const handleLeftClick = () => {
     setAll(allClicks.concat('L'))
-  const updatedLeft = clicks.left + 1 //this was necessary for 'total' state
+    const updatedLeft = clicks.left + 1 //this was necessary for 'total' state
     setClicks({...clicks, left: updatedLeft})
     {/* setTotal(updatedLeft + clicks.right) */}
   }
