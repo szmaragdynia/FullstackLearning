@@ -35,7 +35,7 @@ Another branches are for learning purposes so they might be messy :) (more comme
 Directories not to be contained in clean repos are starting with number 0 (e.g. 0-mdn-forms)
 
 ### **Time used:**
-* Part1
+* Part1. 
     * 2:45 - before the below ones - part1a I guess.
     * 3:30 (+maybe 30-50 configuring stuff [downloading node on PC etc.]) - mon20/03 - learning from part1b.
     * 4:00 - tue21/03 - mdn's js overview.
@@ -45,4 +45,8 @@ Directories not to be contained in clean repos are starting with number 0 (e.g. 
     * 0:15 (+0:40 cleaning the 'npm eject' aftermath) - sat25/03 <br> 
     * 8:30 - mon27/03.
         * 5:20 was used in the period from 01:30AM to 08:30 AM, despite waking at ~14 and starting learning at ~18. Noting for checking whether night is really that overpowering for me.
-    * ?:?? - tue28/03
+    * 1:55 - tue28/03 - finished excercises, cleaned up,
+    * *SUMMARY (excluding the time in parenthesis)*:
+        * Overall time spent learning: 22:45
+        * For a week of time, tuesday 21/03 to tuesday 28/03: 16:30<br>
+        * Started 15/03, finished 28/03. Started in Cracow, then done the papers, then it was monday etc.
