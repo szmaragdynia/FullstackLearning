@@ -21,7 +21,7 @@ const App = () => {
   
   //to setTimeout we pass 2 parameters: function to increment the counter STATE, and a timeout of one second.
     //OK BUT WHERE IS setCounter DEFINITION? look here: https://react.dev/reference/react/useState#setstate
-      //"set functions, like setSomething(nextState)";
+      //"set functions, like setSomething(nextState)"; IT DOES NOT HAVE TO BE NAMED 'SETSTUFF' IT CAN BE ANYTHING omg.
       //"The set function returned by useState lets you update the state to a different value and trigger a re-render."
         //basically what is says is: you have a STATE and you need a setSTATE function to set state to different value, 
           //just type it (or pass a function - some requirements apply)
@@ -72,7 +72,17 @@ const App = () => {
   
 //"Usually defining event handlers within JSX-templates is not a good idea. Here it's ok, because our event handlers are so simple." (we separated them into separate ff anyway)
   
+/* additional explanation:
+<button onClick={console.log('clicked the button')}>
+  button
+</button>
+...The issue here is that our event handler is defined as a function call which means that the event 
+handler is assigned the returned value from the function, which in the case of console.log is undefined.
 
-
+The fact that react hooks get there in loop:
+<button onClick={setValue(0)}>button</button>
+ When the component is rendered the function setValue(0) gets executed which in turn causes the component to be re-rendered.
+ Re-rendering in turn calls setValue(0) again, resulting in an infinite recursion.
+*/
 
 export default App
