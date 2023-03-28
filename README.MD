@@ -13,7 +13,8 @@ Prior: 2:45 - part1a I guess<br>
 +wed 1:00 (yt vid var/let/const). Today giving brain some rest, and tackling everyday small tasks.<br>
 +thu - I did nothing, I suck!<br>
 +fri: 0:50 + 0:30 fighting with vscode<br>
-+sat: 0:15 + 0:40 cleaning the 'npm eject' aftermath 
++sat: 0:15 + 0:40 cleaning the 'npm eject' aftermath <br> 
++mon: 8:30, in which 5:20 was done from 01:30AM to 08:30 AM.
 ### Git-workflow: (shown by example)
 #### A. Just  starting out - first part ever etc.
 1. Your master and master-dirty are the same. 
