@@ -1,7 +1,11 @@
 import { useState } from 'react'
 
+
 const Statistics = (props) => {
-  if (props.total === 0) {
+  // I don't need 'total' state, because if good,bad,neutral states are correct at the point of adding them etc., then the variable consisting of them will be as well.
+  const total = props.good + props.neutral + props.bad
+  console.log(total)
+  if (total === 0) {
     return <p>No feedback given</p>
   }
   return (
@@ -10,9 +14,9 @@ const Statistics = (props) => {
         <StatisticLine text='good' value={props.good} />
         <StatisticLine text='neutral' value={props.neutral} />
         <StatisticLine text='bad' value={props.bad} />
-        <StatisticLine text='total' value={props.total} />
-        <StatisticLine text='average' value={(props.good - props.bad)/props.total} />
-        <StatisticLine text='positive' value={(props.good*100 / props.total) +' %'} />
+        <StatisticLine text='total' value={total} />
+        <StatisticLine text='average' value={(props.good - props.bad)/total} />
+        <StatisticLine text='positive' value={(props.good*100 / total) +' %'} />
       </tbody>
     </table>
   )
@@ -33,23 +37,10 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  const [total, setTotal] = useState(0)
 
-  const handleClickGood = () => {
-    const updatedGood = good + 1
-    setGood(updatedGood)
-    setTotal(updatedGood + neutral + bad)
-  }
-  const handleClickNeutral = () => {
-    const updatedNeutral = neutral + 1
-    setNeutral(updatedNeutral)
-    setTotal(good + updatedNeutral + bad)
-  }
-  const handleClickBad = () =>{
-    const updatedBad = bad + 1
-    setBad(updatedBad)
-    setTotal(good + neutral + updatedBad)
-  } 
+  const handleClickGood = () => setGood(good + 1)
+  const handleClickNeutral = () => setNeutral(neutral + 1)
+  const handleClickBad = () => setBad(bad + 1)
 
   return (
     <div>
@@ -58,12 +49,9 @@ const App = () => {
       <Button handleClick={handleClickNeutral} text='neutral' />
       <Button handleClick={handleClickBad} text='bad' />
       <h2>statistics</h2>
-      <Statistics good={good} neutral={neutral} bad={bad} total={total} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
 
 export default App
-
-// pozbyc sie stanu total, bo po cholere?
-{/* Every time Statistics is rendered, app state must have had changed already (?). Is it safe to assume so? Let's assume so   */}
