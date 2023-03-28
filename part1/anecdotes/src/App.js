@@ -17,15 +17,18 @@ const App = () => {
 
   const generateRandomIndex = (upperBound) => setSelected(Math.floor(Math.random() * upperBound)) //upperbound is not inclusive, thus the max random int is one less 
   const updatePoints = (index) => { 
-    //mam jakies points = [, , , , ]
-    const copy = []
+    const copy = [...points]
+    copy[index] += 1
+    setPoints(copy)
   }
+
   return (
     <>
       <p>{anecdotes[selected]}</p>
       <button onClick={() => generateRandomIndex(anecdotes.length)}>Random next anecdote</button>
       <button onClick={() => updatePoints(selected)}>Vote +1 for this one!</button>
-      <p>{points}</p>
+      <p>has {points[selected]} votes.</p>
+      {/* console.log(points) */}
     </>
   )
 }
