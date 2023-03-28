@@ -1,15 +1,21 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
+# changed all relative (/dir) to absolute (dir) because for now this works and mainly because I want to ignore files no matter the branch (thus I need top-level gitignore)
+
+# dependencies 
+#/node_modules 
+node_modules
+#/.pnp
 /.pnp
 .pnp.js
 
 # testing
-/coverage
+#/coverage
+coverage
 
 # production
-/build
+#/build
+build
 
 # misc
 .DS_Store
