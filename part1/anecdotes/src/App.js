@@ -13,13 +13,19 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(new Array(anecdotes.length).fill(0))
 
-const generateRandom = (upperBound) => setSelected(Math.floor(Math.random() * upperBound)) //upperbound is not inclusive, thus the max random int is one less 
-console.log(selected)
+  const generateRandomIndex = (upperBound) => setSelected(Math.floor(Math.random() * upperBound)) //upperbound is not inclusive, thus the max random int is one less 
+  const updatePoints = (index) => { 
+    //mam jakies points = [, , , , ]
+    const copy = []
+  }
   return (
     <>
       <p>{anecdotes[selected]}</p>
-      <button onClick={() => generateRandom(anecdotes.length)}>Random next anecdote</button>
+      <button onClick={() => generateRandomIndex(anecdotes.length)}>Random next anecdote</button>
+      <button onClick={() => updatePoints(selected)}>Vote +1 for this one!</button>
+      <p>{points}</p>
     </>
   )
 }
