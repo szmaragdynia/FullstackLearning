@@ -6,16 +6,16 @@ const Statistics = (props) => {
   }
   return (
     <>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
-      <p>all {props.total}</p>
-      <p>average {(props.good - props.bad)/props.total }</p>
-      <p>positive {props.good*100/props.total}%</p>
+      <StatisticLine text='good' value={props.good} />
+      <StatisticLine text='neutral' value={props.neutral} />
+      <StatisticLine text='bad' value={props.bad} />
+      <StatisticLine text='total' value={props.total} />
+      <StatisticLine text='average' value={(props.good - props.bad)/props.total} />
+      <StatisticLine text='positive' value={(props.good*100 / props.total) +' %'} />
     </>
   )
 } 
-
+const StatisticLine = (props) => <p>{props.text} {props.value}</p>
 const Button = (props) => <button onClick={props.handleClick}>{props.text}</button>
 
 
@@ -55,3 +55,5 @@ const App = () => {
 }
 
 export default App
+
+// pozbyc sie stanu total, bo po cholere?
