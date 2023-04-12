@@ -6,6 +6,7 @@ const Person = ({ person }) => {
   )
 }
 
+const dude = { name: 'Arto Hellas' }
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -14,9 +15,22 @@ const App = () => {
   const [newName, setNewName] = useState('')
 
   
+  
   const addPerson = (event) => {
     event.preventDefault()
     console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
+    
+    /*const names = persons.map(v => v.name) //from array of object transform into array of contents of 'name' property of the object
+    if(names.includes(newName)) {
+      alert(`${newName} is already added to phonebook`) //alert(newName, "is already added to phonebook") does not work becasue console.log() just can accept more arguments
+      return;
+    }*/
+    
+    if(persons.some( person => person.name === newName )) {
+      alert(`${newName} is already added to phonebook`) //alert(newName, "is already added to phonebook") does not work becasue console.log() just can accept more arguments
+      return;
+    }
+
     const newPerson = {
       name: newName
     }
@@ -26,6 +40,7 @@ const App = () => {
 
   const handleNameChange = (event) => {
     console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
+
     setNewName(event.target.value)
   }
 
