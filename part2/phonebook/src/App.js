@@ -1,20 +1,39 @@
 import { useState } from 'react'
 
-const Person = ({ person }) => {
+const Persons = ({ persons }) => {
   return (
-    <p>{person.name} {person.number}</p>
+    <div>
+      {persons.map(person => <p key={person.name}>{person.name} {person.number}</p>)}
+    </div>
+  )
+}
+
+const Filter = ( {searchQuery, handleSetSearchQuery} ) => {
+  return (
+    <div>
+      Filter visible numbers: <input value={searchQuery} onChange={handleSetSearchQuery} /> 
+    </div>
+  )
+}
+
+const PersonForm = (props) => {
+  return(
+    <form onSubmit={props.addPerson}>
+      <div> name: <input value={props.newName} onChange={props.handleNameChange} /> </div>
+      <div> number: <input value={props.newNumber} onChange={props.handleNumberChange} /> </div>
+      <div> <button type="submit">add</button> </div>
+    </form>
   )
 }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
+  //-----state-----------------------------------------
+  const [persons, setPersons] = useState( [{ name: 'Arto Hellas' }] ) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
-
-  
+  //------------------------------------------------------------
+  //-----event handlers-----------------------------------------
   const addPerson = (event) => {
     event.preventDefault()
     console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
@@ -36,7 +55,6 @@ const App = () => {
     setNewNumber('')
   }
 
-
   const handleNameChange = (event) => {
     console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
     setNewName(event.target.value)
@@ -47,26 +65,26 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handleSetSearchQuery = (event) => {
+    setSearchQuery(event.target.value)
+  }
+  //------------------------------------------------------------
   const personsToShow = persons.filter( person => (person.name.toLowerCase()).includes(searchQuery))
 
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <div> Filter visible numbers: <input value={searchQuery} onChange={(event)=> setSearchQuery(event.target.value)} /> </div>
 
-      <h2>Add new entry</h2>
-      <form onSubmit={addPerson}>
-        <div> name: <input value={newName} onChange={handleNameChange} /> </div>
-        <div> number: <input value={newNumber} onChange={handleNumberChange} /> </div>
-        <div> <button type="submit">add</button> </div>
-      </form>
+      <Filter searchQuery={searchQuery} handleSetSearchQuery={handleSetSearchQuery} />
+      
 
-      <h2>Numbers</h2>
-      <div>
-        {personsToShow.map(person => <Person key={person.name} person={person}/>)}
+      <h3>Add new entry</h3>
+      <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
+
+      <h3>Numbers</h3>
+        <Persons persons={personsToShow} />
       </div>
-    </div>
   )
 }
 
