@@ -1,10 +1,17 @@
 import { useState } from 'react'
 
-const Persons = ({ persons }) => {
+const Persons = ({ persons, searchQuery }) => {
+  const personsToShow = persons.filter( person => (person.name.toLowerCase()).includes(searchQuery))
   return (
     <div>
-      {persons.map(person => <p key={person.name}>{person.name} {person.number}</p>)}
+      {personsToShow.map(person => <Person key={person.name} person={person} />)}
     </div>
+  )
+}
+
+const Person = ({ person }) => {
+  return (
+    <p key={person.name}>{person.name} {person.number}</p>
   )
 }
 
@@ -69,13 +76,12 @@ const App = () => {
     setSearchQuery(event.target.value)
   }
   //------------------------------------------------------------
-  const personsToShow = persons.filter( person => (person.name.toLowerCase()).includes(searchQuery))
+  
 
 
   return (
     <div>
       <h2>Phonebook</h2>
-
       <Filter searchQuery={searchQuery} handleSetSearchQuery={handleSetSearchQuery} />
       
 
@@ -83,7 +89,8 @@ const App = () => {
       <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
 
       <h3>Numbers</h3>
-        <Persons persons={personsToShow} />
+      <Persons persons={persons} searchQuery={searchQuery} />
+      
       </div>
   )
 }
