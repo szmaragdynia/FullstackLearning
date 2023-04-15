@@ -13,12 +13,15 @@ const App = () => {
   useEffect(() => {
     console.log('effect')
     axios
-      .get('https://localhost:3001/notes')
+      .get('http://localhost:3001/notes')
       .then(response => {
         console.log('promise fulfilled')
         setNotes(response.data)
       })
   }, [])
+  //By default, effects run after every completed render, but you can choose to fire it only when certain values have changed.
+  //the effect is always run after the component has been rendered. In our case, however, we only want to execute the effect along with the first render.
+  //The second parameter of useEffect is used to specify how often the effect is run. If the second parameter is an empty array [], then the effect is only run along with the first render of the component.
   console.log('render', notes.length, 'notes')
 
 
