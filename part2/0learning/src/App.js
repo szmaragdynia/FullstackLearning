@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios';
 
 
-//1 rendering app component 2. effect is executed immediately after rendering 3.setnotes makes App() re-render
+//1 rendering app component 2. effect is executed immediately after rendering 3.setnotes makes App() re-render 4. during that re-render effect hook is not fired due to its second parameter
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('a new note...')
