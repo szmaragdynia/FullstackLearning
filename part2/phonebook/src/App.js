@@ -49,9 +49,6 @@ const App = () => {
         setPersons(reponse.data)
       })
     }, [])
-    
-
-
   //-----event handlers-----------------------------------------
   const addPerson = (event) => {
     event.preventDefault()
