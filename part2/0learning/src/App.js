@@ -11,36 +11,42 @@ const App = () => {
 
 
   useEffect(() => {
-    console.log('effect')
+    //console.log('effect')
     axios
       .get('http://localhost:3001/notes')
       .then(response => {
-        console.log('promise fulfilled')
+        //console.log('promise fulfilled')
         setNotes(response.data)
       })
   }, [])
   //By default, effects run after every completed render, but you can choose to fire it only when certain values have changed.
   //the effect is always run after the component has been rendered. In our case, however, we only want to execute the effect along with the first render.
   //The second parameter of useEffect is used to specify how often the effect is run. If the second parameter is an empty array [], then the effect is only run along with the first render of the component.
-  console.log('render', notes.length, 'notes')
+  
+  //console.log('render', notes.length, 'notes')
 
 
   const addNote = (event) => {
     event.preventDefault()
-    console.log('button clicked in <form onSubmit={addNote}> - event.target', event.target)
+    //console.log('button clicked in <form onSubmit={addNote}> - event.target', event.target)
     const noteObject = {
-      id: notes.length + 1, //ok because we never delete
+      //id: notes.length + 1, //ok because we never delete ;;; now commented out, because since we are pushing them to server, we will let the server handle the ids.
       content: newNote,
       important: Math.random() < 0.5,
     }
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
+    axios
+      .post('http://localhost:3001/notes', noteObject)
+      .then(response => {
+        setNotes(notes.concat(response.data)) //1. nie noteObject tylko response.data, bo w response.data on juz wlozyl id 2. w zwiazku z tym to musi byc tutaj, a nie osobno nizej na przyklad
+        setNewNote('')
+      })
+    
   }
 
 
   const handleNoteChange = (event) => {
-    console.log(" onChange={handleNoteChange} - event.target: ", event.target)
-    console.log(event.target.value)
+    //console.log(" onChange={handleNoteChange} - event.target: ", event.target)
+    //console.log(event.target.value)
     setNewNote(event.target.value)
   }
 
