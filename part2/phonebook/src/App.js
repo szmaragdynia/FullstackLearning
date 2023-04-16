@@ -13,7 +13,7 @@ const Persons = ({ persons, searchQuery }) => {
 
 const Person = ({ person }) => {
   return (
-    <p key={person.name}>{person.name} {person.number}</p>
+    <p>{person.name} {person.number}</p>
   )
 }
 
@@ -48,11 +48,12 @@ const App = () => {
       .then(reponse =>{
         setPersons(reponse.data)
       })
+      .catch(error => alert("failed getting initial persons"))
     }, [])
   //-----event handlers-----------------------------------------
   const addPerson = (event) => {
     event.preventDefault()
-    console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
+    //console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
     /*const names = persons.map(v => v.name) //from array of object transform into array of contents of 'name' property of the object
     if(names.includes(newName)) {
       alert(`${newName} is already added to phonebook`) //alert(newName, "is already added to phonebook") does not work becasue console.log() just can accept more arguments
@@ -66,18 +67,24 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    setPersons(persons.concat(newPerson))
-    setNewName('')
-    setNewNumber('')
+    axios
+      .post('http://localhost:3001/persons', newPerson)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+      })
+      .catch(error => alert("failed adding person"))
+
   }
 
   const handleNameChange = (event) => {
-    console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
+    //console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumberChange = (event) => {
-    console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
+    //console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
     setNewNumber(event.target.value)
   }
 
