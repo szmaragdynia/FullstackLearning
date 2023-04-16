@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personsService from './services/persons'
 
 
 const Persons = ({ persons, searchQuery }) => {
   const personsToShow = persons.filter( person => (person.name.toLowerCase()).includes(searchQuery))
   return (
     <div>
-      {personsToShow.map(person => <Person key={person.name} person={person} />)}
+      {personsToShow.map(person => <Person key={person.id} person={person} />)}
     </div>
   )
 }
@@ -43,10 +43,10 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState('')
   //------effect hooks------------------------------------------
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(reponse =>{
-        setPersons(reponse.data)
+    personsService
+      .getAll()
+      .then(initialPersons =>{
+        setPersons(initialPersons)
       })
       .catch(error => alert("failed getting initial persons"))
     }, [])
@@ -67,10 +67,10 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    axios
-      .post('http://localhost:3001/persons', newPerson)
-      .then(response => {
-        setPersons(persons.concat(response.data))
+    personsService
+      .create(newPerson)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
       })
