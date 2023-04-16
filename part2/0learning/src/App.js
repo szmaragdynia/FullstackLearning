@@ -45,6 +45,11 @@ const App = () => {
       .update(id,changedNote)
       .then(returnedNote => {
         setNotes(notes.map(note => (note.id !== id) ? note : returnedNote))
+      })
+      .catch(error => {
+        alert(`the note ${note.content} was already deleted from server`)
+        setNotes(notes.filter(n => n.id !== id)) //if the note with some id was already deleted, we dont want to render it on client side of course
+                                                 //if there was error, that means the promise was rejected, that means that event handler in then() did not fire (first arg of then() is onFulfilled, second [which we are not using] is onRejected)
       })                                                               
   }
 
@@ -57,7 +62,7 @@ const App = () => {
   //------------------------------------------------------
   const notesToShow = showAll ? notes : notes.filter(note => note.important)
 
-  
+
   return (
     <div>
       <h1>Notes</h1>
