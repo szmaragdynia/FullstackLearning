@@ -60,7 +60,7 @@ const App = () => {
 
   const changeNumber = (existingPerson) => {
     if(window.confirm(`Do you want to change the person ${existingPerson.name} number from ${existingPerson.number} to ${newNumber}?`)) {
-      const changedPerson = {...existingPerson, number: newNumber}
+      const changedPerson = {...existingPerson, number: newNumber.trim()}
       
       personsService
         .update(existingPerson.id,changedPerson) //update server
@@ -72,8 +72,8 @@ const App = () => {
 
   const addPerson = () => {
     const newPerson = {
-      name: newName,
-      number: newNumber
+      name: newName.trim(),
+      number: newNumber.trim()
     }
 
     personsService
@@ -96,9 +96,9 @@ const App = () => {
       return;
     }*/
 
-    const existingPerson = persons.find( person => person.name === newName )
+    const existingPerson = persons.find( person => person.name === newName.trim() )
     if(existingPerson) {
-      if(existingPerson.number === newNumber) {
+      if(existingPerson.number === newNumber.trim()) {
         alert(`${existingPerson.name} with number ${existingPerson.number} is already added to phonebook. You can swap the number or add another person.`) 
         //alert(newName, "is already added to phonebook") does not work becasue console.log() just can accept more arguments
         return;
