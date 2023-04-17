@@ -41,12 +41,23 @@ const PersonForm = (props) => {
   )
 }
 
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  
+  return (
+    <div className='notification'> {message} </div>
+  )
+}
+
 const App = () => {
   //-----state-----------------------------------------
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
+  const [notification, setNotification] = useState(null)
   //------effect hooks------------------------------------------
   useEffect(() => {
     personsService
@@ -66,6 +77,8 @@ const App = () => {
         .update(existingPerson.id,changedPerson) //update server
         .then(returnedPerson => {
           setPersons(persons.map(prsn => prsn.id !== existingPerson.id ? prsn : returnedPerson))
+          setNotification(`Successfully changed number`)
+          setTimeout( ()=> setNotification(null), 5000)
         }).catch(error => alert("failed updating person"))
     } 
   }
@@ -82,6 +95,8 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+        setNotification(`Successfully added ${returnedPerson.name}`)
+        setTimeout( ()=> setNotification(null), 5000)
       })
       .catch(error => alert("failed adding person"))
   }
@@ -144,6 +159,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} />
       <Filter searchQuery={searchQuery} handleSetSearchQuery={handleSetSearchQuery} />
       
 
