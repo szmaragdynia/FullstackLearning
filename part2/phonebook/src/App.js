@@ -2,18 +2,24 @@ import { useState, useEffect } from 'react'
 import personsService from './services/persons'
 
 
-const Persons = ({ persons, searchQuery }) => {
+const Persons = ({ persons, searchQuery, deleteEntry }) => {
   const personsToShow = persons.filter( person => (person.name.toLowerCase()).includes(searchQuery))
   return (
     <div>
-      {personsToShow.map(person => <Person key={person.id} person={person} />)}
+      {personsToShow.map(person => <Person key={person.id} person={person} deleteEntry={() => deleteEntry(person.id)}/>)}
     </div>
   )
 }
 
-const Person = ({ person }) => {
+const Person = ({ person, deleteEntry }) => {
   return (
-    <p>{person.name} {person.number}</p>
+    <div>
+      <p>
+        {person.name} {person.number}
+        <button onClick={deleteEntry}>Delete</button>
+      </p>
+
+    </div>
   )
 }
 
@@ -91,6 +97,18 @@ const App = () => {
   const handleSetSearchQuery = (event) => {
     setSearchQuery(event.target.value)
   }
+
+  const deleteEntry = id => {
+    //console.log(`delete ${id}`)
+    personsService
+      .deletePerson(id)
+      .then(() => setPersons(persons.filter(person => person.id !== id))
+      )
+      .catch(error => {
+        alert(`could not process deletion of person with id ${id}`)
+        //no action here because we don't yet know if that person was not in the database, or it was but some other (?) error occured - so we dont know whether we should render that person client-side or not - thus we take no action.
+      })
+  }
   //------------------------------------------------------------
   
 
@@ -105,7 +123,7 @@ const App = () => {
       <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
 
       <h3>Numbers</h3>
-      <Persons persons={persons} searchQuery={searchQuery} />
+      <Persons persons={persons} searchQuery={searchQuery} deleteEntry={deleteEntry} />
       
       </div>
   )
