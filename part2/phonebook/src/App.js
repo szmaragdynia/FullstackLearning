@@ -41,13 +41,13 @@ const PersonForm = (props) => {
   )
 }
 
-const Notification = ({ message }) => {
+const Notification = ({ message, valence }) => {
   if (message === null) {
     return null
   }
   
   return (
-    <div className='notification'> {message} </div>
+    <div className={`notification${valence}`}> {message} </div>
   )
 }
 
@@ -58,6 +58,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [notification, setNotification] = useState(null)
+  const [valence, setValence] = useState('Informative') //for use with notification:Positive, Negative, Informative (also acting as placeholder)
   //------effect hooks------------------------------------------
   useEffect(() => {
     personsService
@@ -77,9 +78,16 @@ const App = () => {
         .update(existingPerson.id,changedPerson) //update server
         .then(returnedPerson => {
           setPersons(persons.map(prsn => prsn.id !== existingPerson.id ? prsn : returnedPerson))
+          setValence('Positive')
           setNotification(`Successfully changed number`)
           setTimeout( ()=> setNotification(null), 5000)
-        }).catch(error => alert("failed updating person"))
+          setTimeout( ()=> setValence('Informative'), 5000)
+        }).catch(error => {
+          setValence('Negative')
+          setNotification(`Cannot change number of ${changedPerson.name}`)
+          setTimeout( ()=> setNotification(null), 5000)
+          setTimeout( ()=> setValence('Informative'), 5000)
+        })
     } 
   }
 
@@ -95,10 +103,18 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+
+        setValence('Positive')
         setNotification(`Successfully added ${returnedPerson.name}`)
         setTimeout( ()=> setNotification(null), 5000)
+        setTimeout( ()=> setValence('Informative'), 5000)
       })
-      .catch(error => alert("failed adding person"))
+      .catch(error => {
+        setValence('Negative')
+        setNotification(`Cannot add person ${newPerson.name}`)
+        setTimeout( ()=> setNotification(null), 5000)
+        setTimeout( ()=> setValence('Informative'), 5000)
+      })
   }
 
   const handleAdd = (event) => {
@@ -159,7 +175,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notification} />
+      <Notification message={notification} valence={valence}/>
       <Filter searchQuery={searchQuery} handleSetSearchQuery={handleSetSearchQuery} />
       
 
