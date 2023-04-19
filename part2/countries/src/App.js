@@ -5,15 +5,6 @@ const openweathermap_api_key = process.env.REACT_APP_API_KEY
 //BEWARE, API IS STILL EMBEDED INTO FILES. SHOULD I EVER HOST THIS WEBSITE, THE API WILL BE EXPOSED
 
 
-//todo in future?
-//mądrzejsze przekazywanie stanów niz setSetCountries?
-//notification component - moge zrobic notification ktore bedzie zeminiac stan, tlyko ono musi wywolywac funkcje ktora jest w App()
-//more proper handling changing views, instead of passing the setSetCountries through everything 
-//alfabetycznie
-//cos zlego w inicjianowaniu stanu za pomoca pustej tablicy?
-//alt dpdac 
-
-
 
 const HandleDisplay = ({ countries, setSetCountries }) => {
   if (countries.length===0) { return } 
@@ -24,7 +15,6 @@ const HandleDisplay = ({ countries, setSetCountries }) => {
 }
 
 const ShowEntryInList = ({ setSetCountries, thisCountry }) => {
-  console.log("ShowEntryInList")
   const paragraphStyle = {
     marginTop: 5,
     marginBottom: 5
@@ -40,14 +30,12 @@ const ShowEntryInList = ({ setSetCountries, thisCountry }) => {
 }
 
 const ShowListOfCountries = ({ countries, setSetCountries }) => {
-  console.log("ShowListOfCountries, n of countries:",countries.length)
   return (
     countries.map( (country, i) => <ShowEntryInList key={i} thisCountry={country} setSetCountries={setSetCountries}/>)
   )
 }
 
 const ShowCountryInfo = ({ country }) => {
-  console.log("ShowCountryInfo")
   return (
     <div>
       <h2>{country.name.common}</h2>
@@ -60,7 +48,6 @@ const ShowCountryInfo = ({ country }) => {
       </ul>
 
       <h3>Flag:</h3>
-        {/*<img src={Object.values(country.flags)[0]} alt={country.flags.alt}/> */}
         <img src={country.flags.png} alt={country.flags.alt}/> {/*error prone because I am not sure that there is always 'png' and 'alt' field. */}
       
       <h3>Weather in {country.capital}</h3>
@@ -105,10 +92,9 @@ function App() {
       return
     }
     axios
-      .get(`https://restcountries.com/v3.1/name/${searchQuery}`) //I cant somehow get only name.common.
+      .get(`https://restcountries.com/v3.1/name/${searchQuery}`) 
       .then(response => {
         setCountries(response.data)
-        //console.log(response.data)
       }).catch(() => setCountries([])) //if error, e.g. no country with such name on the server
   }, [searchQuery])
 

@@ -12,7 +12,6 @@ const Course = ({ course }) => {
 const Header = ({ course }) => (
     <h1>{course}</h1>
 )
-//notice this is shorthand version, w/o curly braces
 
 const Content = ({ parts }) => {
     return (
