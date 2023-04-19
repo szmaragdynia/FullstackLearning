@@ -1,55 +1,48 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
+const ShowCountries = ({ countries }) => {
+  if (!countries || countries.length===0) { return } 
+  
+  else if (countries.length === 1) { return <ShowCountryInfo country={countries[0]} /> }
 
-const Notification = ({ message }) => {
-  if (message === null) return null;
-  return (
-    <p> {message} !!! </p>
-  )
+  else if (countries.length > 10 ) { return <p>Too many matches, change filter</p> }
+  
+  else { //less than 10 but more than 1
+    const paragraphStyle = {
+      marginTop: 5,
+      marginBottom: 5
+    }
+    return countries.map(country => <p key={country.name.common} style ={paragraphStyle}> {country.name.common}</p>)
+  }
 }
 
-const ShowCountryInfo = ({ countries }) => {
-  if (!countries) {return}
-
-  console.log("countries[0]",countries[0])
-  console.log("countries[0].languages[0]",Object.values(countries[0].languages))
-
-  if (countries.length > 10 ) {
-    return <p>Too many matches, change filter</p>
-  }
-  else if (countries.length !== 1) {
-    return countries.map(country => <p key={country.name.common}>{country.name.common}</p>)
-  }
-  else if (countries.length === 1) {  
-    return (
+const ShowCountryInfo = ({ country }) => {
+  return (
     <div>
-      <h2>{countries[0].name.common}</h2>
-      <p>Capital: {countries[0].capital}</p>
-      <p>Land area: {countries[0].area}</p>
+      <h2>{country.name.common}</h2>
+      <p>Capital: {country.capital}</p>
+      <p>Land area: {country.area}</p>
 
-      <h3>languages:</h3>
+      <h3>Languages:</h3>
       <ul>
-        {/*countries[0].languages.map(language => <li key={language}>{language}</li>)*/}
+        {Object.values(country.languages).map(lang => <li key={lang}> {lang} </li>)}
       </ul>
+
+      <h3>Flag:</h3>
+        {/*<img src={Object.values(country.flags)[0]} alt={country.flags.alt}/> */}
+        <img src={country.flags.png} alt={country.flags.alt}/> {/*error prone because I am not sure that there is always 'png' and 'alt' field. */}
     </div>
     )
   }
 
-  
-}
-
-
-//w App() input value={value}(state)?
 
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [countries, setCountries] = useState(null)
-  const [notification, setNotification] = useState(null)
+  const [countries, setCountries] = useState([])
 
   useEffect(() => {
-    setNotification(null) //on re-render with new search query
     if(searchQuery === '') {
       setCountries([])
       return
@@ -59,8 +52,7 @@ function App() {
       .then(response => {
         setCountries(response.data)
         //console.log(response.data)
-        //console.log(`https://restcountries.com/v3.1/name/${searchQuery}?fields=name`)
-      }).catch(() => setNotification("No countries with such name/letters")) 
+      }).catch(() => setCountries([])) //if error, e.g. no country with such name on the server
   }, [searchQuery])
 
   const handleSearchQuery = event => {
@@ -68,14 +60,11 @@ function App() {
   }
 
 
+
   return (
     <div>
-      <Notification message={notification} />
-      <p>
-        find countries:
-        <input onChange={handleSearchQuery} /> 
-      </p>
-      <ShowCountryInfo countries={countries} />
+      <p>find countries: <input onChange={handleSearchQuery} /></p>
+      <ShowCountries countries={countries} />
     </div>
   );
 }
