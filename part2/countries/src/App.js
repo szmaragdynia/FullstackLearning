@@ -1,23 +1,48 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-const ShowCountries = ({ countries }) => {
-  if (!countries || countries.length===0) { return } 
+//todo in future?
+//notification component
+//more proper handling changing views, instead of passing the setSetCountries through everything 
+
+
+const HandleCountriesDisplay = ({ countries, setSetCountries }) => {
+  if (countries.length===0) { return } 
   
   else if (countries.length === 1) { return <ShowCountryInfo country={countries[0]} /> }
 
-  else if (countries.length > 10 ) { return <p>Too many matches, change filter</p> }
+  else if (countries.length > 10 ) { return <p>{`Too many matches (${countries.length}), change filter`}</p> }
   
-  else { //less than 10 but more than 1
-    const paragraphStyle = {
-      marginTop: 5,
-      marginBottom: 5
-    }
-    return countries.map(country => <p key={country.name.common} style ={paragraphStyle}> {country.name.common}</p>)
+  else if (countries.length > 1 && countries.length <= 10 ) { return <ShowCountryList countries={countries} setSetCountries={setSetCountries} /> }
+  
+  else console.log("something is wrong")
+}
+
+const ShowCountryEntry = ({ setSetCountries, thisCountry }) => {
+  console.log("ShowCountryEntry")
+  const paragraphStyle = {
+    marginTop: 5,
+    marginBottom: 5
   }
+  return (
+    <div>
+    <p style ={paragraphStyle}>
+      {thisCountry.name.common}
+      <button onClick={()=> setSetCountries([thisCountry])}>show</button>
+    </p>
+  </div>
+  )
+}
+
+const ShowCountryList = ({ countries, setSetCountries }) => {
+  console.log("ShowCountryList, n of countries:",countries.length)
+  return (
+    countries.map( (country, i) => <ShowCountryEntry key={i} thisCountry={country} setSetCountries={setSetCountries}/>)
+  )
 }
 
 const ShowCountryInfo = ({ country }) => {
+  console.log("ShowCountryInfo")
   return (
     <div>
       <h2>{country.name.common}</h2>
@@ -59,12 +84,16 @@ function App() {
     setSearchQuery(event.target.value)
   }
 
+  const setSetCountries = (param) => {
+    setCountries(param)
+  }
+
 
 
   return (
     <div>
       <p>find countries: <input onChange={handleSearchQuery} /></p>
-      <ShowCountries countries={countries} />
+      <HandleCountriesDisplay countries={countries} setSetCountries={setSetCountries}/>
     </div>
   );
 }
