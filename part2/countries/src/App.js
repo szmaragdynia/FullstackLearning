@@ -5,6 +5,16 @@ const openweathermap_api_key = process.env.REACT_APP_API_KEY
 //BEWARE, API IS STILL EMBEDED INTO FILES. SHOULD I EVER HOST THIS WEBSITE, THE API WILL BE EXPOSED
 
 
+//todo in future?
+//mądrzejsze przekazywanie stanów niz setSetCountries?
+//notification component - moge zrobic notification ktore bedzie zeminiac stan, tlyko ono musi wywolywac funkcje ktora jest w App()
+//more proper handling changing views, instead of passing the setSetCountries through everything 
+//alfabetycznie
+//cos zlego w inicjianowaniu stanu za pomoca pustej tablicy?
+//alt dpdac 
+
+
+
 const HandleDisplay = ({ countries, setSetCountries }) => {
   if (countries.length===0) { return } 
   else if (countries.length === 1) { return <ShowCountryInfo country={countries[0]} /> }
