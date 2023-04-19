@@ -50,3 +50,26 @@ Directories not to be contained in clean repos are starting with number 0 (e.g. 
         * Overall time spent learning: 22:45
         * For a week of time, tuesday 21/03 to tuesday 28/03: 16:30<br>
         * Started 15/03, finished 28/03. Started in Cracow, then done the papers, then it was monday etc.
+* Part2.
+    * wed/thu 05-06/04:
+        * ~~(0:35 - setting up git etc.)~~ 
+        * ~~(0:53 - making my own snippets)~~
+        * 1:53 - learning, youtube content suggested from course,checking it out (I guess)
+        * 2:30 - learning
+    * thu/fri 06-07/04 --- 1:20 - excercise (adhd kicked in and "I cant read now")
+    * tue 11/04
+        * 1:40 - learning (adhd kicked in and "I cant read now")
+        * 2:13 - learning
+    * wed 12/04
+        * 4:20 - learning
+        * ~~(1:25 - fight with themes in VScode - boy do I waste time :/)~~ 
+    * thu 13/04 --- 1:25 - learning
+    * fri 14/04 --- 2:19 - learning
+    * sat 15/04 --- 3:40 - learning
+    * sun 16/04 --- 1:50 - learning
+    * mon 17/04 --- 4:40 - learning
+    * ~~(tue 18/04 --- 3:00 - ex 2.18 but after not having slept, so it was more like "having fun" than honest work :| Boy...)~~ 
+    * wed 19/04 --- 5:27 - learning
+     * *SUMMARY (excluding the time in parenthesis)*:
+        * Overall time spent learning: 33:17
+        * I REALLY need to step up my speed game
