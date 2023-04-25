@@ -57,8 +57,17 @@ app.get('/api/notes/:id', (request, response) => {
   } else {
     response.status(404).end()
   }
-  
+  //We do not need to display anything in the browser because REST APIs are interfaces that are intended for programmatic use, and the error status code is all that is needed.
 })
+
+app.delete('/api/notes/:id', (request, response) => {
+  const id = Number(request.params.id)
+  notes = notes.filter(note => note.id !== id)
+  response.status(204).end()
+})
+//If deleting the resource is successful, meaning that the note exists and is removed, we respond to the request with the status code 204 no content
+//The 204 (No Content) status code indicates that the server has successfully fulfilled the request and that there is no additional content to send in the response conten
+//There's no consensus on what status code should be returned to a DELETE request if the resource does not exist. The only two options are 204 and 404.
 
 const PORT = 3001
 app.listen(PORT, () => {
