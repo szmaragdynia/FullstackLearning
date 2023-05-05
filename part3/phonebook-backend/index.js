@@ -1,4 +1,3 @@
-const { response } = require('express')
 const express = require('express')
 const app = express()
 app.use(express.json())
@@ -36,6 +35,25 @@ app.get('/', (req, res) => {
 
 app.get('/api/persons', (req,res) => {
     res.json(persons)
+})
+
+
+app.get('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id)
+    //console.log(req.params.id) //=2
+    //console.log(typeof(req.params.id)) //=string
+    //console.log(Number(req.params.id)) //=2
+
+    const person = persons.find(p => p.id === id)
+    //const person = persons.filter(p => p.id === id) //nope, this returns an array constitng of one object
+
+    if(person){
+        res.json(person)
+    } else {
+        res.status(404).end()
+    }
+
+    
 })
 
 
