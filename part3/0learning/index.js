@@ -55,15 +55,31 @@ app.delete('/api/notes/:id', (request, response) => {
 
 
 app.post('/api/notes', (request, response) =>{
-  const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0 
+  //const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0 
+    //this is now a separate function
 
-  const note = request.body
-  note.id = maxId + 1
+  if (!request.body.content){//undefined is falsy, that probably will be undefined if empty?
+    return response.status(400).json({error: "content missing"})
+  }//tego nie bylo xd
+  
+  //const note = request.body
+  //note.id = maxId + 1
+    //previously we could set arbitrary properties - now we do not.
+  const note = {
+    content: request.body.content,
+    important: request.body.important,
+    id: generateId()
+  }
 
   notes = notes.concat(note)
 
   response.json(note)
 })
+
+const generateId = () => {
+  const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0 
+  return maxId + 1
+}
 
 
 const PORT = 3001
