@@ -67,7 +67,7 @@ app.post('/api/notes', (request, response) =>{
     //previously we could set arbitrary properties - now we do not.
   const note = {
     content: request.body.content,
-    important: request.body.important,
+    important: request.body.important || false,
     id: generateId()
   }
 
