@@ -2,8 +2,28 @@
 const express = require('express')
 const app = express()
 
-
+//middleware - functions that can be used for handling request and response objects.
+//they're executed one by one in the order that they were taken into use (express().use) in express.
 app.use(express.json())
+
+//Let's implement our own middleware that prints information about every request that is sent to the server.
+const requestLogger = (request, response, next) => {
+  console.log('Method:', request.method)
+  console.log('Path:', request.path)
+  console.log('Body:', request.body)
+  console.log('---')
+  next() //The next function yields control to the next middleware.
+}
+
+app.use(requestLogger)
+
+
+/*
+Middleware functions have to be taken into use before routes if we want them to be executed before the route event handlers are called. There are also situations where we want to define
+ middleware functions after routes. In practice, this means that we are defining middleware functions that are only called if no route handles the HTTP request.
+*/
+
+
 
 
 let notes= [
@@ -80,6 +100,13 @@ const generateId = () => {
   const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0 
   return maxId + 1
 }
+
+
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({error: 'unknown endpoint'})
+}
+app.use(unknownEndpoint)
 
 
 const PORT = 3001
