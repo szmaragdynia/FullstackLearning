@@ -72,27 +72,25 @@ app.delete('/api/persons/:id', (req,res) => {
 })
 
 const generateId = () => {
-
+    const max = 1000000 //magical number
+    return Math.floor((Math.random() * max))
 }
 
 app.post('/api/persons', (req,res) =>{
     
-    if(!req.body.name && !req.body.number) { //as far as I remember, we implemented frontend so that you can have only number or name
-
+    if(!req.body.name) { 
+        return res.status(400).json({error: 'name missing'})
     }
 
     const person = {
         id: generateId(),
         name: req.body.name,//request.body.name?
-        number: req.body.number,
+        number: req.body.number //if number is empty, will it break or just give no number? I think that's (latter) we had the frontend
     }
 
     persons = persons.concat(person)
 
-    response.json(person)
-    response.send(person)
-
-
+    res.json(person)
 })
 
 //====================================================================================================
