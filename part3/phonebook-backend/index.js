@@ -1,3 +1,4 @@
+const { response } = require('express')
 const express = require('express')
 const app = express()
 app.use(express.json())
@@ -68,6 +69,30 @@ app.delete('/api/persons/:id', (req,res) => {
     const id = Number(req.params.id)
     persons = persons.filter(p => p.id !== id)
     res.status(204).end()
+})
+
+const generateId = () => {
+
+}
+
+app.post('/api/persons', (req,res) =>{
+    
+    if(!req.body.name && !req.body.number) { //as far as I remember, we implemented frontend so that you can have only number or name
+
+    }
+
+    const person = {
+        id: generateId(),
+        name: req.body.name,//request.body.name?
+        number: req.body.number,
+    }
+
+    persons = persons.concat(person)
+
+    response.json(person)
+    response.send(person)
+
+
 })
 
 //====================================================================================================
