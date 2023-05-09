@@ -19,10 +19,9 @@ FROM base as build
 # Install packages needed to build node modules
 #piotr: due to error, changed as suggested here: https://community.fly.io/t/e-unable-to-locate-package-python-is-python3/12445/3
 #RUN apt-get update -qq && \
-#    apt-get install -y python-is-python3 pkg-config build-essential 
+#    apt-get install -y python-is-python3 pkg-config build-essential    
 RUN apt-get update -qq && \
     apt-get install -y python pkg-config build-essential 
-
 
 # Install node modules
 COPY --link package.json package-lock.json .

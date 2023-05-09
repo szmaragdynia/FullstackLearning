@@ -15,3 +15,17 @@ Content-Type: application/json
     "name": "Pawel",
     "number": "11dsddd1000"
 }
+###
+GET https://phonebook-learning.fly.dev/info
+###
+GET https://phonebook-learning.fly.dev/api/persons
+###
+DELETE https://phonebook-learning.fly.dev/api/persons/3
+###
+POST https://phonebook-learning.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Pawel",
+    "number": "11dsddd1000"
+}

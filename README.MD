@@ -1,3 +1,6 @@
+https://phonebook-learning.fly.dev/ (phonebook app)
+https://notes-learning.fly.dev/ (notes app)
+
 # Fullstack Open 
 This repo contains all the excercises and everything else regarding my learning path, learning from the Fullstack Open, from the University of Helsinki.
 
