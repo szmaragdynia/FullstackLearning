@@ -16,6 +16,7 @@ const getAll = () => {
     content: 'This note is not saved to server',
     important: true,
   }
+  //the above one were for debugging
   return request.then(response => response.data.concat(nonExisting))
 }
 

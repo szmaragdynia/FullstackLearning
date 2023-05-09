@@ -5,6 +5,7 @@ const app = express()
 //middleware - functions that can be used for handling request and response objects.
 //they're executed one by one in the order that they were taken into use (express().use) in express.
 app.use(express.json())
+app.use(express.static('build'))
 
 //Let's implement our own middleware that prints information about every request that is sent to the server.
 const requestLogger = (request, response, next) => {
@@ -14,8 +15,11 @@ const requestLogger = (request, response, next) => {
   console.log('---')
   next() //The next function yields control to the next middleware.
 }
-
 app.use(requestLogger)
+
+const cors = require('cors')
+app.use(cors())
+
 
 
 /*
@@ -109,7 +113,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
