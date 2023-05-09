@@ -19,3 +19,4 @@ app.listen(PORT)
 //we bing the http server(assigned to app) to listen to HTTP requests sent to port 3001
 
 console.log(`Server running on port ${PORT}`)
+
