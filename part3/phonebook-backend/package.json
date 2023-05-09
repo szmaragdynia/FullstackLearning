@@ -5,16 +5,21 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node_modules/.bin/nodemon index.js",
+    "dev": "node_modules/.bin/nodemon --verbose index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
+  },
+  "nodemonConfig": { 
+    "ignore": ["node_modules"] 
   }
+
 }
