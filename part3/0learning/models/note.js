@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 
 mongoose.set('strictQuery',false)
 
-//const url = `mongodb+srv://fullstack:${password}@cluster0.p4fqzx6.mongodb.net/noteApp?retryWrites=true&w=majority`
 const url = process.env.MONGODB_URI
 
 mongoose.connect(url)
