@@ -61,10 +61,14 @@ app.get('/api/notes/:id', (request, response, next) => {
 })
 
 
-app.delete('/api/notes/:id', (request, response) => {
-  const id = Number(request.params.id)
-  notes = notes.filter(note => note.id !== id)
-  response.status(204).end()
+app.delete('/api/notes/:id', (request, response, next) => {
+  Note.findByIdAndRemove(request.params.id)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
+  //const id = Number(request.params.id)
+  //notes = notes.filter(note => note.id !== id)
 })
 
 
@@ -82,6 +86,17 @@ app.post('/api/notes', (request, response) =>{
   })
 })
 
+app.put('/api/notes/:id', (request, response, next) => {
+  const note = {
+    content: request.body.content,
+    important: request.body.important,
+  }
+  //Notice the method receives a regular JavaScript object as its parameter, and not a new note object created with the Note constructor function.
+  //By default, the updatedNote parameter of the event handler receives the original document without the modifications.{ new: true } parameter, will cause our event handler to be called with the new modified document instead of the original.
+  Note.findByIdAndUpdate(request.params.id, note, {new: true})
+    .then(updatedNote => response.json(updatedNote))
+    .catch(error => next(error))
+})
 
 
 

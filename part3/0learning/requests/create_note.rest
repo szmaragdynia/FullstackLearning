@@ -10,3 +10,13 @@ Content-Type: application/json
 GET http://localhost:3001/api/notes
 ###
 GET http://localhost:3001/api/notes/645afc85ffea14f8c2e8d9bc
+###
+DELETE http://localhost:3001/api/notes/645afc85ffea14f8c2e8d9bc
+###
+PUT http://localhost:3001/api/notes/645a97da88a46adc0baa43be
+Content-Type: application/json
+
+{
+    "content": "stuff2-new",
+    "important": false
+}
