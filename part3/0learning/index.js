@@ -94,10 +94,10 @@ app.post('/api/notes', (request, response) =>{
   })
 })
 
-const generateId = () => {
+/*const generateId = () => {
   const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0 
   return maxId + 1
-}
+} */
 
 
 
@@ -107,7 +107,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

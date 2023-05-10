@@ -119,24 +119,25 @@ app.post('/api/persons', (req,res) =>{
         return res.status(400).json({error: 'name and number are both required'})
     }
     
-    const alreadyExists = persons.find(p => p.name === req.body.name)
+    /*const alreadyExists = persons.find(p => p.name === req.body.name)
     if(alreadyExists) {
         return res.status(400).json({error: 'name already in database'})
-    }
+    } */
 
-    const person = {
-        id: generateId(),
+    const person = new Person({
         name: req.body.name,//request.body.name?
         number: req.body.number //if number is empty, will it break or just give no number? I think that's (latter) we had the frontend
-    }
+    })
 
-    persons = persons.concat(person)
+    person.save().then(savedPerson => {
+        console.log(`Added ${savedPerson}`)
+        res.json(savedPerson)
+    })
 
-    res.json(person)
 })
 
 //====================================================================================================
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
