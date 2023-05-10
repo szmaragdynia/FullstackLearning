@@ -21,6 +21,8 @@ app.use(cors())
 
 
 
+
+
 let notes= [
     {
       "id": 1,
@@ -50,14 +52,22 @@ app.get('/api/notes', (request, response) => {
 })
 
 
-app.get('/api/notes/:id', (request, response, next) => {
+app.get('/api/notes/:id', (request, response) => {
+  //const id = Number(request.params.id)
+  //const note = notes.find(note => note.id === id)
   Note.findById(request.params.id).then(note => {
     if (note) {
       response.json(note)
-    } else {  //case for properly formed id's, but with no note with such id
+    } else {  //if no note in the database, null is returned. THIS CASE IS FOR ids that DO MATCH MONGO IDENTIFIER FORMAT (for instance take some existing node id and change number within it - you get the 404 status. Use "1" as an id, you get 500 status code (error catched))
       response.status(404).end()
     }
-  }).catch(error => next(error)) //If next was called without a parameter, then the execution would simply move onto the next route or middleware. If the next function is called with a parameter, then the execution will continue to the error handler middleware.)
+  }).catch(error => {
+    console.log("there was an error:", error)
+    //response.status(500).end() //internal server error - in case the get promise returned by findById gets rejected
+    response.status(400).send({error: 'malformed id'}) //are we certain that is the only one possible error?
+  })
+  
+  
 })
 
 
@@ -76,12 +86,20 @@ app.post('/api/notes', (request, response) =>{
   const note = new Note ({
     content: request.body.content,
     important: request.body.important || false,
+    //id: generateId() //no longer needed with db
   })
+  
+  //notes = notes.concat(note)
+  //response.json(note)
   note.save().then(savedNote => {
     response.json(savedNote)
   })
 })
 
+/*const generateId = () => {
+  const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0 
+  return maxId + 1
+} */
 
 
 
@@ -91,24 +109,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 
-const errorHandler = (error, request, response, next) => {
-  console.log("error message:", error.message)
-
-  if (error.name === 'CastError') { //this error is returned if malformed id is used
-    return response.status(400).send({error: 'malformed id'})
-  }
-  next(error) //In all other error situations (note there is return above), the middleware passes the error forward to the default Express error handler.
-}
-
-//error-handling middleware has to be the last loaded middleware!
-  //probably? because otherwise the "next(error)" will use some other middleware??
-app.use(errorHandler) 
-
-
-
 const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
-
-
