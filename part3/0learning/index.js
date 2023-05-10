@@ -1,3 +1,8 @@
+require('dotenv').config() //taking .env into use
+const Note = require('./models/note')
+
+
+
 const express = require('express')
 const app = express()
 
@@ -25,30 +30,6 @@ app.use(cors())
 Middleware functions have to be taken into use before routes if we want them to be executed before the route event handlers are called. There are also situations where we want to define
  middleware functions after routes. In practice, this means that we are defining middleware functions that are only called if no route handles the HTTP request.
 */
-
-//-----------------------------------db stuff
-if (process.argv.length < 3) {
-  console.log('give password as argument')
-  process.exit(1)
-}
-
-const mongoose = require('mongoose')
-const password = process.argv[2]
-const url = `mongodb+srv://fullstack:${password}@cluster0.p4fqzx6.mongodb.net/noteApp?retryWrites=true&w=majority`
-mongoose.set('strictQuery',false)
-mongoose.connect(url)
-
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean
-})
-const Note = mongoose.model('Notes', noteSchema)
-
-
-
-
-
-//-----------------------------------no longer db stuff
 
 
 
