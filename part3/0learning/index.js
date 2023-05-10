@@ -56,16 +56,18 @@ app.get('/api/notes/:id', (request, response) => {
   //const id = Number(request.params.id)
   //const note = notes.find(note => note.id === id)
   Note.findById(request.params.id).then(note => {
-    response.json(note)
+    if (note) {
+      response.json(note)
+    } else {  //if no note in the database, null is returned. THIS CASE IS FOR ids that DO MATCH MONGO IDENTIFIER FORMAT (for instance take some existing node id and change number within it - you get the 404 status. Use "1" as an id, you get 500 status code (error catched))
+      response.status(404).end()
+    }
+  }).catch(error => {
+    console.log("there was an error:", error)
+    //response.status(500).end() //internal server error - in case the get promise returned by findById gets rejected
+    response.status(400).send({error: 'malformed id'}) //are we certain that is the only one possible error?
   })
-  //what if not existing?
-
-
-  /*if (note) {
-    response.json(note)
-  } else {
-    response.status(404).end()
-  } */
+  
+  
 })
 
 
