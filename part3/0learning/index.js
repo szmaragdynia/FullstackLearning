@@ -72,28 +72,36 @@ app.delete('/api/notes/:id', (request, response, next) => {
 })
 
 
-app.post('/api/notes', (request, response) =>{
-  if (!request.body.content){
-    return response.status(400).json({error: "content missing"})
-  }
-
+app.post('/api/notes', (request, response, next) =>{
   const note = new Note ({
     content: request.body.content,
     important: request.body.important || false,
   })
-  note.save().then(savedNote => {
-    response.json(savedNote)
-  })
+
+  note.save()
+    .then(savedNote => {
+      response.json(savedNote)
+    })
+    .catch(error => next(error))
 })
 
 app.put('/api/notes/:id', (request, response, next) => {
-  const note = {
+  const {content, important} = request.body
+
+  /*const note = {
     content: request.body.content,
     important: request.body.important,
-  }
+  }*/
+  
   //Notice the method receives a regular JavaScript object as its parameter, and not a new note object created with the Note constructor function.
   //By default, the updatedNote parameter of the event handler receives the original document without the modifications.{ new: true } parameter, will cause our event handler to be called with the new modified document instead of the original.
-  Note.findByIdAndUpdate(request.params.id, note, {new: true})
+  //--
+  //validations are not run by default when findByIdAndUpdate is executed.
+  Note.findByIdAndUpdate(
+    request.params.id,
+    {content, important},
+    {new: true, runValidators: true, context: 'query'}
+  )
     .then(updatedNote => response.json(updatedNote))
     .catch(error => next(error))
 })
@@ -111,6 +119,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === 'CastError') { //this error is returned if malformed id is used
     return response.status(400).send({error: 'malformed id'})
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({error: error.message})
   }
   next(error) //In all other error situations (note there is return above), the middleware passes the error forward to the default Express error handler.
 }
