@@ -17,13 +17,21 @@ mongoose.connect(url)
         console.log(`Error connecting to MongoDB-phonebook: ${error.message}`)
     })
 
+
+const validator = (val) => /^\d{2,3}-\d+$/.test(val)    
+const customValidator = [validator, "The number must be in format: 00-000..(infinite numbers) or 000-000..(infinite numbers)"]
+
 const personSchema = new mongoose.Schema({
     name: {
         type: String,
         minLength: 3,
         required: true
     },
-    number: String
+    number: {
+        type: String,
+        minLength: 8, //assuming its the entire string length. This does not make sense, but the information to use custom validator for the second part of the task (2/3 numbers, pause, numbers), causes me to think this is what is required (otherwise I would have to use custom validator here too probably)
+        validate: customValidator
+    }
 })
 
 personSchema.set('toJSON',{
