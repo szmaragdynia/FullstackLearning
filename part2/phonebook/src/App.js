@@ -84,6 +84,7 @@ const App = () => {
           setTimeout( ()=> setValence('Informative'), 5000)
         }).catch(error => {
           setValence('Negative')
+          //perhaps necessary integration with backend in case or error? But we can't for now have db error here, becasue we have no boundaries set on number in db schema.
           setNotification(`Cannot change number of ${changedPerson.name}`)
           setTimeout( ()=> setNotification(null), 5000)
           setTimeout( ()=> setValence('Informative'), 5000)
@@ -111,7 +112,9 @@ const App = () => {
       })
       .catch(error => {
         setValence('Negative')
-        setNotification(`Cannot add person ${newPerson.name}`)
+        //setNotification(`Cannot add person ${newPerson.name}`)
+        //I dont yet know a way to differentiate between errors (I dont want do get into that rabit hole now)
+        setNotification(`Cannot add person ${newPerson.name} - ${error.response.data.error}`)
         setTimeout( ()=> setNotification(null), 5000)
         setTimeout( ()=> setValence('Informative'), 5000)
       })

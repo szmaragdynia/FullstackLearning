@@ -12,14 +12,14 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Pawelek",
-    "number": "00000"
+    "number": "3"
 }
 ###
 PUT http://localhost:3001/api/persons/645ac344e2a8ab9482f9d2c3
 Content-Type: application/json
 
 {
+    "name": "Xi",
     "number": "222222222222222222"
 }
 ###
