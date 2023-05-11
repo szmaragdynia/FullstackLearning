@@ -16,6 +16,15 @@ Content-Type: application/json
     "number": "00000"
 }
 ###
+PUT http://localhost:3001/api/persons/645ac344e2a8ab9482f9d2c3
+Content-Type: application/json
+
+{
+    "number": "222222222222222222"
+}
+###
+###
+###
 GET https://phonebook-learning.fly.dev/info
 ###
 GET https://phonebook-learning.fly.dev/api/persons

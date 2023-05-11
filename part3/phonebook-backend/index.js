@@ -105,6 +105,17 @@ app.post('/api/persons', (req, res, next) =>{
 })
 
 
+app.put('/api/persons/:id', (req, res, next) => {
+    const person = {
+        name: req.body.name,
+        number: req.body.number
+    }
+
+    Person.findByIdAndUpdate(req.params.id, person, {new: true})
+        .then(updatedNote => res.json(updatedNote))
+        .catch(error => next(error))
+})
+
 const errorHandler = (error, req, res, next) => {
     console.log("error message:", error.message)
 
