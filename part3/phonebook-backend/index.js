@@ -41,52 +41,50 @@ app.use(cors())
 
 
 app.get('/', (req, res) => {
-    res.send('<h1>Hello World</h1>')
+    res.send('<h1>Hello World - you probably should see react app instead of this.</h1>')
 })
 
 
-app.get('/api/persons', (req,res) => {
-    Person.find({}).then(persons => res.json(persons))
+app.get('/api/persons', (req, res, next) => {
+    Person.find({})
+        .then(persons => res.json(persons))
+        .catch(error => next(error))
 })
 
 
-app.get('/api/persons/:id', (req, res) => {
-    const id = Number(req.params.id)
-    //console.log(req.params.id) //=2
-    //console.log(typeof(req.params.id)) //=string
-    //console.log(Number(req.params.id)) //=2
-
-    const person = persons.find(p => p.id === id)
-    //const person = persons.filter(p => p.id === id) //nope, this returns an array constitng of one object
-
-    if(person){
-        res.json(person)
-    } else {
-        res.status(404).end()
-    }    
+app.get('/api/persons/:id', (req, res, next) => {
+    Person.findById(req.params.id)
+        .then(person => {
+            if(person){
+                res.json(person)
+            } else {
+                res.status(404).end() //id of non-existent note (but properly formed - if bad, it is caught by catch)
+            }    
+        })
+        .catch(error => next(error))    
 })
 
 
-app.get('/info', (req,res) => {
+app.get('/info', (req, res) => {
     const date = new Date(Date.now())
-    res.send(`
-        <p>Phonebook has info for ${persons.length} people</p>
-        <p>${date}</p>
+    Person.countDocuments().then(number => {
+        res.send(`
+            <p>Phonebook has info for ${number} people</p>
+            <p>${date}</p>
         `)
+    })
+    
 })
 
 
-app.delete('/api/persons/:id', (req,res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
     Person.findByIdAndRemove(req.params.id)
         .then(result => res.status(204).end())
-        .catch(error => {
-            console.log("error at delete", error)
-            res.status(400).send({error: 'error at delete'})
-        })
+        .catch(error => next(error))
 })
 
 
-app.post('/api/persons', (req,res) =>{
+app.post('/api/persons', (req, res, next) =>{
     
     if(!req.body.name || !req.body.number) { 
         return res.status(400).json({error: 'name and number are both required'})
@@ -97,12 +95,26 @@ app.post('/api/persons', (req,res) =>{
         number: req.body.number //if number is empty, will it break or just give no number? I think that's (latter) we had the frontend
     })
 
-    person.save().then(savedPerson => {
-        console.log(`Added ${savedPerson}`)
-        res.json(savedPerson)
-    })
+    person.save()
+        .then(savedPerson => {
+            console.log(`Added ${savedPerson}`)
+            res.json(savedPerson)
+        })
+        .catch(error => next(error))
 
 })
+
+
+const errorHandler = (error, req, res, next) => {
+    console.log("error message:", error.message)
+
+    if(error.name === 'CastError') {
+        return res.status(400).send({error: 'malformed id'})
+    }
+    next(error) //if error is not CastError
+}
+
+app.use(errorHandler)
 
 //====================================================================================================
 const PORT = process.env.PORT
