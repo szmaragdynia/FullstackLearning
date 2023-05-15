@@ -1,4 +1,4 @@
-https://phonebook-learning.fly.dev/ (phonebook app) <br>
+https://phonebook-learning.fly.dev/ (phonebook app)
 https://notes-learning.fly.dev/ (notes app)
 
 # Fullstack Open 
