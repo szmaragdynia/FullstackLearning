@@ -75,7 +75,7 @@ const App = () => {
       const changedPerson = {...existingPerson, number: newNumber.trim()}
       
       personsService
-        .update(existingPerson.id,changedPerson) //update server
+        .update(existingPerson.id,changedPerson) 
         .then(returnedPerson => {
           setPersons(persons.map(prsn => prsn.id !== existingPerson.id ? prsn : returnedPerson))
           setValence('Positive')
@@ -84,8 +84,6 @@ const App = () => {
           setTimeout( ()=> setValence('Informative'), 5000)
         }).catch(error => {
           setValence('Negative')
-          //setNotification(`Cannot change number of ${changedPerson.name}`)
-          //I dont yet know a way to differentiate between errors (I dont want do get into that rabit hole now)
           setNotification(`Cannot change number of ${changedPerson.name} - ${error.response.data.error}`)
           setTimeout( ()=> setNotification(null), 5000)
           setTimeout( ()=> setValence('Informative'), 5000)
@@ -113,8 +111,6 @@ const App = () => {
       })
       .catch(error => {
         setValence('Negative')
-        //setNotification(`Cannot add person ${newPerson.name}`)
-        //I dont yet know a way to differentiate between errors (I dont want do get into that rabit hole now)
         setNotification(`Cannot add person ${newPerson.name} - ${error.response.data.error}`)
         setTimeout( ()=> setNotification(null), 5000)
         setTimeout( ()=> setValence('Informative'), 5000)
@@ -123,19 +119,11 @@ const App = () => {
 
   const handleAdd = (event) => {
     event.preventDefault()
-    /*
-    //console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
-    const names = persons.map(v => v.name) //from array of object transform into array of contents of 'name' property of the object
-    if(names.includes(newName)) {
-      alert(`${newName} is already added to phonebook`) //alert(newName, "is already added to phonebook") does not work becasue console.log() just can accept more arguments
-      return;
-    }*/
 
     const existingPerson = persons.find( person => person.name === newName.trim() )
     if(existingPerson) {
       if(existingPerson.number === newNumber.trim()) {
         alert(`${existingPerson.name} with number ${existingPerson.number} is already added to phonebook. You can swap the number or add another person.`) 
-        //alert(newName, "is already added to phonebook") does not work becasue console.log() just can accept more arguments
         return;
       } 
       else { changeNumber(existingPerson) }
@@ -144,12 +132,10 @@ const App = () => {
   }
 
   const handleNameChange = (event) => {
-    //console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumberChange = (event) => {
-    //console.log("event.target: ",event.target, " event.target.value: ",event.target.value)
     setNewNumber(event.target.value)
   }
 

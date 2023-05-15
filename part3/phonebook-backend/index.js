@@ -57,8 +57,8 @@ app.get('/api/persons/:id', (req, res, next) => {
       if(person){
         res.json(person)
       } else {
-        res.status(404).end() //id of non-existent note (but properly formed - if bad, it is caught by catch)
-      } //res.status() only sets the status code of the response, but it does not send anything. You need to call another method, such as .send(), .json(), or .end()
+        res.status(404).end() //id of non-existent note (but properly formed - if badly, it is caught by catch)
+      } 
     })
     .catch(error => next(error))
 })
@@ -85,8 +85,8 @@ app.delete('/api/persons/:id', (req, res, next) => {
 
 app.post('/api/persons', (req, res, next) => {
   const person = new Person({
-    name: req.body.name,//request.body.name?
-    number: req.body.number //if number is empty, will it break or just give no number? I think that's (latter) we had the frontend
+    name: req.body.name,
+    number: req.body.number 
   })
 
   person.save()
