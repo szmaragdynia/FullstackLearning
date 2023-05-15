@@ -1,0 +1,40 @@
+GET http://localhost:3001/
+###
+GET http://localhost:3001/api/persons
+###
+GET http://localhost:3001/api/persons/3
+###
+GET http://localhost:3001/info
+###
+DELETE http://localhost:3001/api/persons/645ac344e2a8ab9482f9d2c3
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "aaaa7",
+    "number": "11b1-3333333333333333"
+}
+###
+PUT http://localhost:3001/api/persons/645c6627d6359e51ba39486b
+Content-Type: application/json
+
+{
+    "number": "222222222222222222"
+}
+###
+###
+###
+GET https://phonebook-learning.fly.dev/info
+###
+GET https://phonebook-learning.fly.dev/api/persons
+###
+DELETE https://phonebook-learning.fly.dev/api/persons/3
+###
+POST https://phonebook-learning.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Pawelek",
+    "number": "00000"
+}

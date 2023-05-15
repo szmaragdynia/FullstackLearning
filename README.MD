@@ -1,3 +1,6 @@
+https://phonebook-learning.fly.dev/ (phonebook app) <br>
+https://notes-learning.fly.dev/ (notes app)
+
 # Fullstack Open 
 This repo contains all the excercises and everything else regarding my learning path, learning from the Fullstack Open, from the University of Helsinki.
 
@@ -73,4 +76,27 @@ Directories not to be contained in clean repos are starting with number 0 (e.g. 
      * *SUMMARY (excluding the time in parenthesis)*:
         * Overall time spent learning: 33:17
         * I REALLY need to step up my speed game
+<<<<<<< HEAD
 
+=======
+* Part3
+    * April (04)
+        * 24th - 1:40
+        * 25th - 2:36
+    * May (05) 
+        * 2nd - 1:30 
+        * 5th - 4:40
+        * 6th - 2:00
+        * 7th - 0:17
+        * 8th 
+            * 4:11
+            * 1:08 - fighting with fly on PATH and docker config
+            * ~~0:30 - vscode theme and colours~~
+        * 9th - 4:50
+        * 10th - 5:40
+        * 13th - 0:40
+        * 14th - 0:47
+     * *SUMMARY (excluding the time in parenthesis)*:
+        * Overall time spent learning: 29:59 ~= 30:00
+        * "my speed game" is unexistent. It worked only when I was in the time-space void. I hate adhd - structure is necessary but with it you are slow. So you are either in hell or you are a snail. I must choose former.
+>>>>>>> workInProgress

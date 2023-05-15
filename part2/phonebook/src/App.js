@@ -84,7 +84,7 @@ const App = () => {
           setTimeout( ()=> setValence('Informative'), 5000)
         }).catch(error => {
           setValence('Negative')
-          setNotification(`Cannot change number of ${changedPerson.name}`)
+          setNotification(`Cannot change number of ${changedPerson.name} - ${error.response.data.error}`)
           setTimeout( ()=> setNotification(null), 5000)
           setTimeout( ()=> setValence('Informative'), 5000)
         })
@@ -111,7 +111,7 @@ const App = () => {
       })
       .catch(error => {
         setValence('Negative')
-        setNotification(`Cannot add person ${newPerson.name}`)
+        setNotification(`Cannot add person ${newPerson.name} - ${error.response.data.error}`)
         setTimeout( ()=> setNotification(null), 5000)
         setTimeout( ()=> setValence('Informative'), 5000)
       })

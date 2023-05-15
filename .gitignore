@@ -23,7 +23,9 @@ coverage
 
 # production
 #/build
-build
+#-------------commented out by me
+#build
+
 
 # misc
 .DS_Store
