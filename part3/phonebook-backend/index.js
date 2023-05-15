@@ -9,7 +9,7 @@ const app = express()
 app.use(express.json())
 app.use(express.static('build'))
 
-morgan.token('data', function (req, res) {
+morgan.token('data', function (req) {
   return JSON.stringify(req.body)
 })
 const tinyPlusPOSTData = (tokens, req, res) => {
@@ -58,7 +58,7 @@ app.get('/api/persons/:id', (req, res, next) => {
         res.json(person)
       } else {
         res.status(404).end() //id of non-existent note (but properly formed - if bad, it is caught by catch)
-      }
+      } //res.status() only sets the status code of the response, but it does not send anything. You need to call another method, such as .send(), .json(), or .end()
     })
     .catch(error => next(error))
 })
@@ -78,7 +78,7 @@ app.get('/info', (req, res) => {
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-    .then(result => res.status(204).end())
+    .then(() => res.status(204).end())
     .catch(error => next(error))
 })
 
@@ -110,6 +110,7 @@ app.put('/api/persons/:id', (req, res, next) => {
     .catch(error => next(error))
 })
 
+//====================================================================================================
 const errorHandler = (error, req, res, next) => {
   console.log('error message:', error.message)
 

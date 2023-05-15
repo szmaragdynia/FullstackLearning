@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-if (process.argv.length != 3 && process.argv.length != 5) {
+if (process.argv.length !== 3 && process.argv.length !== 5) {
   console.log('usage:')
   console.log('>node <filename>.js <password>')
   console.log('>node <filename>.js <password> <name> <number>')
