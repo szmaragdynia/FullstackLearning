@@ -1,5 +1,4 @@
 //The app.js file creates the actual (express?) application
-
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
@@ -33,12 +32,9 @@ app.use(middleware.requestLogger)``
 
 //the app.js takes the router into use as shown below
 //The router we defined in controllers directory is used if the URL of the request starts with /api/notes. 
-app.use('/api/notes', notesRouter)  //??????????????????????????????is this working as "if"?
+app.use('/api/notes', notesRouter)  //is this working as "if"? - yes. Different uri's will not be served by Router()
 
 app.use(middleware.unknownEndpoint)
-//error-handling middleware (PROBABLY STILL) has to be the last loaded middleware!
-  //???????????????????????????/probably? because otherwise the "next(error)" will use some other middleware??
-    //????????????????????????????BUT WHY ACTUALLY, SINCE NEXT(ERROR) SPECIFICALLY AIMS FOR ERROR-HANDLER (SEE COMMENT IN CONTROLLERS/NOTES.JS)
 app.use(middleware.errorHandler)
 //be wary that in 'middleware' we have custom middlewares, because e.g. notesRouter is middleware as well, and we take it into use here too.
 

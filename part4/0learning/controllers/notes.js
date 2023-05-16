@@ -1,5 +1,4 @@
 //The event handlers of routes are commonly referred to as controllers
-
 const notesRouter = require('express').Router()
 const Note = require('../models/note')
 

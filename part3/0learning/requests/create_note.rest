@@ -19,3 +19,5 @@ Content-Type: application/json
     "content": "lol",
     "important": false
 }
+###
+GET https://notes-learning.fly.dev/api/notes

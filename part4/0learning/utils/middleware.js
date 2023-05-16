@@ -1,6 +1,5 @@
 //Our custom middleware has been moved here
 //beware, this is CUSTOM middleware, not ALL middleware ever, here.
-
 const logger = require('./logger')
 
 

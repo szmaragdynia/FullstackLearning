@@ -1,6 +1,5 @@
 //This file (note.js file under the models directory) only defines the Mongoose schema for notes.
 //The responsibility of establishing the connection to the database has been given to the app.js module. 
-
 const mongoose = require('mongoose')
 
 
