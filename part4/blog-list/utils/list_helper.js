@@ -1,3 +1,5 @@
+const lodash = require('lodash');
+
 const dummy = (blogsArr) => { 
   return 1
 }
@@ -54,7 +56,7 @@ const mostBlogs = (blogsArr) => {
 
   const authorsBlogsAmount = blogsArr.reduce(getAuthorsBlogsAmount, {})
   const maxValue = Math.max(...Object.values(authorsBlogsAmount)) //get the biggest blog number (value) among the authors(keys)
-  const maxAuthor = Object.keys(authorsBlogsAmount).find(author => authorsBlogsAmount[author] === maxValue) //among the keys, find who was the author(key) with the maxValue
+  const maxAuthor = Object.keys(authorsBlogsAmount).find(value => authorsBlogsAmount[value] === maxValue) //among the keys, find who was the author(key) with the maxValue
 
   return {author: maxAuthor, blogs: maxValue}
 
@@ -86,4 +88,16 @@ const mostBlogs = (blogsArr) => {
 
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
+const mostBlogsWithLodash = (blogsArr) => {
+  if (blogsArr.length === 0) return {}
+  
+  const authorsBlogsAmount =  lodash.countBy(blogsArr, blog => blog.author)
+
+  const maxValue = Math.max(...Object.values(authorsBlogsAmount)) //get the biggest blog number (value) among the authors(keys)
+  const maxAuthor = Object.keys(authorsBlogsAmount).find(value => authorsBlogsAmount[value] === maxValue) //among the keys, find who was the author(key) with the maxValue
+
+  return {author: maxAuthor, blogs: maxValue}
+}
+
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostBlogsWithLodash }
