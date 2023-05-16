@@ -14,24 +14,24 @@ const mongoose = require('mongoose')
 //The responsibility of establishing the connection to the database has been given to the app.js module
 mongoose.set('strictQuery',false)
 
-logger.info("connecting to url:", config.MONGODB_URI)
+logger.info('connecting to url:', config.MONGODB_URI)
 
 mongoose.connect(config.MONGODB_URI)
-    .then(() => {
-        logger.info(`connected to MongoDB`)
-    })
-    .catch(error => {
-        logger.error('error connecting to MongoDB:',error.message)
-    })
+  .then(() => {
+    logger.info('connected to MongoDB')
+  })
+  .catch(error => {
+    logger.error('error connecting to MongoDB:',error.message)
+  })
 
 
 app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
-app.use(middleware.requestLogger)``
+app.use(middleware.requestLogger)
 
 //the app.js takes the router into use as shown below
-//The router we defined in controllers directory is used if the URL of the request starts with /api/notes. 
+//The router we defined in controllers directory is used if the URL of the request starts with /api/notes.
 app.use('/api/notes', notesRouter)  //is this working as "if"? - yes. Different uri's will not be served by Router()
 
 app.use(middleware.unknownEndpoint)
