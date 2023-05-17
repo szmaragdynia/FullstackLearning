@@ -8,16 +8,9 @@ const Note = require('../models/note')
 //All of the routes related to notes are now in the notes.js module under the controllers directory.
 //All routes are now defined for the router object, similar to what did before with the object representing the entire application.
 
-/*
-app.get('/', (request, response) => {
-    response.send('<h1>Hello World!</h1>')
-  })
-*/
-//I guess that even if we wanted the above route to work, it would have to be in separate file, since all the routes here pertain to /api/notes (as defined/stated/if-walled in app.js)
-
-
-notesRouter.get('/', (request, response) => {
-  Note.find({}).then(notes => response.json(notes))
+notesRouter.get('/', async (request, response) => {
+  const notes = await Note.find({})
+  response.json(notes)
 })
 
 
@@ -49,7 +42,7 @@ notesRouter.post('/', (request, response, next) => {
 
   note.save()
     .then(savedNote => {
-      response.json(savedNote)
+      response.status(201).json(savedNote)
     })
     .catch(error => next(error))
 })
