@@ -4,12 +4,14 @@ const dummy = (blogsArr) => {
   return 1
 }
 
+//========================================================================================================================================================
 const totalLikes = (blogsArr) => { 
   sumAll = (accum, currVal) => accum + currVal.likes
   
   return blogsArr.reduce(sumAll, 0)
 }
 
+//========================================================================================================================================================
 const favoriteBlog = (blogsArr) => {
   findMostLiked = (accum, currVal) => currVal.likes > accum.likes ? currVal : accum //if many, first is returned!
 
@@ -25,6 +27,7 @@ const favoriteBlog = (blogsArr) => {
   }
 }
 
+//========================================================================================================================================================
 const mostBlogs = (blogsArr) => {
   if (blogsArr.length === 0) return {}
 
@@ -88,19 +91,27 @@ const mostBlogs = (blogsArr) => {
 
 }
 
+//========================================================================================================================================================
 const mostBlogsWithLodash = (blogsArr) => {
   if (blogsArr.length === 0) return {}
   
-  const authorsBlogsAmount =  lodash.countBy(blogsArr, blog => blog.author)
+  const authorsBlogsAmount =  lodash.countBy(blogsArr, blog => blog.author) //cout occurences of author in blogs
+  /*RESULTING IN:
+  Object {
+    "Edsger W. Dijkstra": 2,
+    "Michael Chan": 1,
+    "Robert C. Martin": 3,
+    } */
 
+  
   const maxValue = Math.max(...Object.values(authorsBlogsAmount)) //get the biggest blog number (value) among the authors(keys)
   const maxAuthor = Object.keys(authorsBlogsAmount).find(value => authorsBlogsAmount[value] === maxValue) //among the keys, find who was the author(key) with the maxValue
 
-  return {author: maxAuthor, blogs: maxValue}
+  return {author: maxAuthor, blogs: maxValue} 
 }
 
 
-
+//========================================================================================================================================================
 const mostLikes = (blogsArr) => {
   if (blogsArr.length === 0) return {}
 
@@ -111,25 +122,72 @@ const mostLikes = (blogsArr) => {
 
     return authorsLikesOverall
   }
-
-
   const authorsLikesOverall = blogsArr.reduce(getAuthorsLikesOverall, {})
+
   const maxValue = Math.max(...Object.values(authorsLikesOverall)) 
   const maxAuthor = Object.keys(authorsLikesOverall).find(value => authorsLikesOverall[value] === maxValue) 
 
   return {author: maxAuthor, likes: maxValue}  
 }
 
+//========================================================================================================================================================
 const mostLikesWithLodash = (blogsArr) => {
   if (blogsArr.length === 0) return {}
   
-  const authorsLikesOverall =  lodash.countBy(blogsArr, blog => blog.author)
-
-  const maxValue = Math.max(...Object.values(authorsLikesOverall)) //get the biggest blog number (value) among the authors(keys)
-  const maxAuthor = Object.keys(authorsLikesOverall).find(value => authorsLikesOverall[value] === maxValue) //among the keys, find who was the author(key) with the maxValue
-
-  return {author: maxAuthor, blogs: maxValue}
+  const groupedObjectsByAuthor = lodash.groupBy(blogsArr, "author")
+  /*RESULTING IN:  
+  {
+    "author1_name" : [obj1, obj2], //author:group
+    "author2_name": [obj1...]
+  }*/
+  /* Object {
+    "Edsger W. Dijkstra": Array [
+      Object {
+        "__v": 0,
+        "_id": "5a422aa71b54a676234d17f8",
+        "author": "Edsger W. Dijkstra",
+        "likes": 5,
+        "title": "Go To Statement Considered Harmful",
+        "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+      },
+      Object {
+        "__v": 0,
+        "_id": "5a422b3a1b54a676234d17f9",
+        "author": "Edsger W. Dijkstra",
+        "likes": 12,
+        "title": "Canonical string reduction",
+        "url": "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+      },
+    ],
+    "Michael Chan": Array [
+      Object {
+        "__v": 0,
+        "_id": "5a422a851b54a676234d17f7",
+        "author": "Michael Chan",
+        "likes": 7,
+        "title": "React patterns",
+        "url": "https://reactpatterns.com/",
+      },
+    ], 
+    .... and so on
+    */
+  
+  const authorsLikesOverall = lodash.map(groupedObjectsByAuthor, (group, author) => {  //group is value of key author because " The iteratee is invoked with three arguments: (value, index|key, collection)."
+    return {
+      author: author,
+      likes: lodash.sumBy(group, "likes")
+    }
+  })
+  //map: for every ...item?...that is group, you return author(which is groups key, because group is that key value), and sum of likes throughout the group items - because the group is an array of objects
+  //RESULTING IN: [{"author": "Michael Chan", "likes": 7}, {"author": "Edsger W. Dijkstra", "likes": 17}, {"author": "Robert C. Martin", "likes": 12}]
+  
+  let blogWithMaxLikes = authorsLikesOverall[0]
+  authorsLikesOverall.forEach(blog => {
+    if (blog.likes > blogWithMaxLikes.likes) blogWithMaxLikes = blog
+  })
+  
+  return blogWithMaxLikes
 }
 
 
-module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostBlogsWithLodash, mostLikes }
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostBlogsWithLodash, mostLikes, mostLikesWithLodash }
