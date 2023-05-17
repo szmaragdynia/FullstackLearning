@@ -14,3 +14,17 @@ primary_region = "waw"
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
+
+
+# so I understand that when I use "fly deploy", the fly.io by default runs my app in production mode? - "Yes, that’s correct."
+
+
+# Fly.io will use the standard npm start command to run your app, unless you specify a different command in your fly.toml file.
+# And since you have cross-env as a development dependency, it will not be deployed to Fly.io when you use fly deploy, which will cause your npm start command to fail. (I had "start": "cross-env NODE_ENV=production node index.js")
+
+# When you use fly deploy, Fly.io will use the NODE_ENV environment variable to determine which mode to run your app in. By default, it will run your app in production mode, unless you specify a different value for NODE_ENV in your fly.toml file.
+
+#-----------
+#Regarding environment variables set in package.json, what bing told me, is taht I have to use cross-env in fly.io for fly.io to set them, because they use different bash.
+#It also told me that fly.io uses NODE_ENV internally and I can set it to something, however it uses it for other purposes too, and these will not change (or something).
+#It also told me that I could also use environment variables of different names and use them in my app, but I would have to define them here, under [env], or something.
