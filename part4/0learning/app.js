@@ -38,7 +38,7 @@ app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 //be wary that in 'middleware' we have custom middlewares, because e.g. notesRouter is middleware as well, and we take it into use here too.
 
-module.exports = app //????????????????????????????How does he konw to export the file, not the app=express()?
+module.exports = app 
 
 
 
