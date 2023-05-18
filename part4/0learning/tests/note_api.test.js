@@ -5,28 +5,20 @@ const api = supertest(app)
 //supertest takes care that the application being tested is started at the port that it uses internally.
 //it has to, because we launch the app at specified port in index.js, but tests only use express app defined in the app.js
 const Note = require('../models/note')
-const logger = require('../utils/logger')
+//const logger = require('../utils/logger')
+const helper = require('./test_helper')
 
-const initialNotes = [
-  {
-    content: 'HTML is easy',
-    important: false,
-  },
-  {
-    content: 'Browser can execute only JavaScript',
-    important: true,
-  }
-]
+
 
 //Let's initialize the database before every test with the beforeEach function:
 // beforeEach is run before each test in a describe block, while beforeAll is run once before all the tests, or if put in a in a describe block, then before these tests (I could have 2 in 2 desc blocks)
 //so if I have few describe blocks in a file, it will run that many times as many times I have describe block. (at least according to bing)
-
 beforeEach(async () => {
   await Note.deleteMany({})
-  let noteObject = new Note(initialNotes[0])
+
+  let noteObject = new Note(helper.initialNotes[0])
   await noteObject.save()
-  noteObject = new Note(initialNotes[1])
+  noteObject = new Note(helper.initialNotes[1])
   await noteObject.save()
 })
 
@@ -42,11 +34,15 @@ test('get /api/notes - notes are returned as json', async () => {
   //The actual value of the header is application/json; charset=utf-8, 
 })
 
+
+
 test('get /api/notes - all notes are returned', async () => {
   const response = await api.get('/api/notes')
   // execution gets below only after the HTTP request is complete
-  expect(response.body).toHaveLength(initialNotes.length)
+  expect(response.body).toHaveLength(helper.initialNotes.length)
 })
+
+
 
 test('get /api/notes - a specific note is within the returned notes', async () => {
   const response = await api.get('/api/notes')
@@ -55,6 +51,7 @@ test('get /api/notes - a specific note is within the returned notes', async () =
   expect(contents).toContain('Browser can execute only JavaScript')
   //Use .toContain when you want to check that an item is in an array
 })
+
 
 
 test('post /api/notes - a valid note can be added', async () => {
@@ -69,12 +66,15 @@ test('post /api/notes - a valid note can be added', async () => {
     .expect(201)
     .expect('Content-Type', /application\/json/)
 
-  const response = await api.get('/api/notes')
-  expect(response.body).toHaveLength(initialNotes.length + 1) //testing if the number of notes returned increases
+  //const response = await api.get('/api/notes')
+  const notesAtEnd = await helper.notesInDb()
+  expect(notesAtEnd).toHaveLength(helper.initialNotes.length + 1) //testing if the number of notes returned increases
   
-  const contents = response.body.map(n => n.content)
+  const contents = notesAtEnd.map(n => n.content)
   expect(contents).toContain('async/await simplifies making async calls')
 })
+
+
 
 test('post /api/notes - note without content is not added', async () => {
   const newNote = {
@@ -86,8 +86,9 @@ test('post /api/notes - note without content is not added', async () => {
     .send(newNote)
     .expect(400)
   
-  const response = await api.get('/api/notes')
-  expect(response.body).toHaveLength(initialNotes.length)
+  //const response = await api.get('/api/notes')
+  const notesAtEnd = await helper.notesInDb()
+  expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
   
 })
 

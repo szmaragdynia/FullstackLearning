@@ -34,7 +34,7 @@ notesRouter.delete('/:id', (request, response, next) => {
 })
 
 
-notesRouter.post('/', (request, response, next) => {
+/*notesRouter.post('/', (request, response, next) => {
   const note = new Note ({
     content: request.body.content,
     important: request.body.important || false,
@@ -45,6 +45,19 @@ notesRouter.post('/', (request, response, next) => {
       response.status(201).json(savedNote)
     })
     .catch(error => next(error))
+}) */
+
+notesRouter.post('/', async (request, response, next) => {
+  const note = new Note ({
+    content: request.body.content,
+    important: request.body.important || false,
+  })
+
+  const savedNote = await note.save()
+  response.status(201).json(savedNote)
+  
+  //what with error handling?
+  //.catch(error => next(error))
 })
 
 
