@@ -18,17 +18,18 @@ beforeEach( async () => {
 
 
 
-test('GET /api/blogs - check if correct amount of blogs are returned AND in correct format', async () => {
-  const response = await api
+test('GET /api/blogs - check if returned  AND in correct format', async () => {
+  await api
   .get('/api/blogs')
   .expect(200)
   .expect('Content-Type', /application\/json/)
-
-  expect(response.body).toHaveLength(helper.initialBlogs.length)
-
 })
 
 
+test('GET /api/blogs - check if correct amount of blogs are returned', async () => {
+  const response = await api.get('/api/blogs')
+  expect(response.body).toHaveLength(helper.initialBlogs.length)
+})
 
 
 
