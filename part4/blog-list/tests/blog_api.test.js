@@ -47,7 +47,7 @@ test('POST /api/blogs - if succesfully creates new blog post', async () => {
     title: "Type wars",
     author: "Robert C. Martin",
     url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-    likes: 2    
+    likes: 2
   }
   
   const returnedBlog = await api
@@ -66,6 +66,7 @@ test('POST /api/blogs - if succesfully creates new blog post', async () => {
 
 })
 
+
 test('POST /api/blogs - if \'likes\' property is missing, it should be 0', async () => {
   const newBlogWithoutLikesProp = {
     title: "Type wars",
@@ -78,7 +79,31 @@ test('POST /api/blogs - if \'likes\' property is missing, it should be 0', async
 
 })
 
+test('POST /api/blogs - if \'title\' property is missing, backend responds with 400 Bad Request ', async () => {
+  const newBlogWithoutTitleProp = {
+    author: "Robert C. Martin",
+    url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+    likes: 2
+  }
+  
+  await api
+    .post('/api/blogs')
+    .send(newBlogWithoutTitleProp)
+    .expect(400)
+})
 
+test('POST /api/blogs - if \'url\' property is missing, backend responds with 400 Bad Request ', async () => {
+  const newBlogWithoutUrlProp = {
+    title: "Type wars",
+    author: "Robert C. Martin",
+    likes: 2
+  }
+  
+  await api
+    .post('/api/blogs')
+    .send(newBlogWithoutUrlProp)
+    .expect(400)
+})
 
 afterAll(async () => {
   await mongoose.connection.close()
