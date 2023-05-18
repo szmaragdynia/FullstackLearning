@@ -1,3 +1,5 @@
+const Blog = require('../models/blog')
+
 const initialBlogs = [
   {
     title: "React patterns",
@@ -26,4 +28,12 @@ const initialBlogs = [
 ]
 
 
-module.exports = { initialBlogs }
+const notesInDb = async () => {
+  const notes = await Blog.find({})
+  const notesJson = notes.map(note => note.toJSON()) //returning as defined in transform property in blog.js - just for the sake of future tests, and also because we usualy use response.json in api
+  //console.log(notesJson)
+  return notesJson
+} 
+
+
+module.exports = { initialBlogs, notesInDb }

@@ -41,6 +41,30 @@ test('GET /api/blogs - if unique identifier is named \'id\' ', async () => {
   })
 })
 
+//================================================================================================
+test('POST /api/blogs - if succesfully creates new blog post', async () => {
+  const newBlog = {
+    title: "Type wars",
+    author: "Robert C. Martin",
+    url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+    likes: 2    
+  }
+  
+  const returnedBlog = await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(201)
+  .expect('Content-Type', /application\/json/)
+
+  const notesAtEnd = await helper.notesInDb()
+  //console.log(notesAtEnd.length)
+  //console.log(helper.initialBlogs.length)
+  expect(notesAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  newBlog.id = returnedBlog.body.id
+  expect(notesAtEnd).toContainEqual(newBlog)
+
+})
 
 
 
