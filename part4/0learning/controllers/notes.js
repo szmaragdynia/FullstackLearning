@@ -23,8 +23,7 @@ notesRouter.get('/', async (request, response) => {
     }
   }).catch(error => next(error)) //If next was called without a parameter, then the execution would simply move onto the next route or middleware. If the next function is called with a parameter, then the execution will continue to the error handler middleware.)
 }) */
-
-notesRouter.get('/:id', async (request, response, next) => {
+/*notesRouter.get('/:id', async (request, response, next) => {
   try {  
     const note = await Note.findById(request.params.id)
     if (note) {
@@ -35,7 +34,17 @@ notesRouter.get('/:id', async (request, response, next) => {
   } catch(exception) {
     next(exception)
   }
+}) */
+notesRouter.get('/:id', async (request, response, next) => {
+  const note = await Note.findById(request.params.id)
+  if (note) {
+    response.json(note)
+  } else {  //case for properly formed id's, but with no note with such id
+    response.status(404).end()
+  }
+  //we are using express-async-errors, which automatically passes the execution to error handling middleware, if an exception occurs in async route
 })
+
 
 /*notesRouter.delete('/:id', (request, response, next) => {
   Note.findByIdAndRemove(request.params.id)
@@ -44,15 +53,20 @@ notesRouter.get('/:id', async (request, response, next) => {
     })
     .catch(error => next(error))
 }) */
-
-notesRouter.delete('/:id', async (request, response, next) => {
+/*notesRouter.delete('/:id', async (request, response, next) => {
   try {
     await Note.findByIdAndRemove(request.params.id)
     response.status(204).end()
   } catch(exception) {
     next(exception)
   }
+}) */
+notesRouter.delete('/:id', async (request, response, next) => {
+    await Note.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+    //we are using express-async-errors, which automatically passes the execution to error handling middleware, if an exception occurs in async route
 })
+
 
 /*notesRouter.post('/', (request, response, next) => {
   const note = new Note ({
@@ -66,8 +80,7 @@ notesRouter.delete('/:id', async (request, response, next) => {
     })
     .catch(error => next(error))
 }) */
-
-notesRouter.post('/', async (request, response, next) => {
+/*notesRouter.post('/', async (request, response, next) => {
   const note = new Note ({
     content: request.body.content,
     important: request.body.important || false,
@@ -79,8 +92,17 @@ notesRouter.post('/', async (request, response, next) => {
   } catch (exception) {
     next(exception)
   }
+}) */
+notesRouter.post('/', async (request, response, next) => {
+  const note = new Note ({
+    content: request.body.content,
+    important: request.body.important || false,
+  })
+ 
+  const savedNote = await note.save()
+  response.status(201).json(savedNote)
+  //we are using express-async-errors, which automatically passes the execution to error handling middleware, if an exception occurs in async route
 })
-
 
 notesRouter.put('/:id', (request, response, next) => {
   const { content, important } = request.body

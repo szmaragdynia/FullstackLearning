@@ -10,6 +10,8 @@ const cors = require('cors')
 const notesRouter = require('./controllers/notes')
 const mongoose = require('mongoose')
 
+require('express-async-errors')
+
 
 //The responsibility of establishing the connection to the database has been given to the app.js module
 mongoose.set('strictQuery',false)
@@ -32,6 +34,7 @@ app.use(middleware.requestLogger)
 
 //the app.js takes the router into use as shown below
 //The router we defined in controllers directory is used if the URL of the request starts with /api/notes.
+
 app.use('/api/notes', notesRouter)  //is this working as "if"? - yes. Different uri's will not be served by Router()
 
 app.use(middleware.unknownEndpoint)
