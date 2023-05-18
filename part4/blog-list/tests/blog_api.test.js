@@ -67,13 +67,13 @@ test('POST /api/blogs - if succesfully creates new blog post', async () => {
 })
 
 test('POST /api/blogs - if \'likes\' property is missing, it should be 0', async () => {
-  const newBlog = {
+  const newBlogWithoutLikesProp = {
     title: "Type wars",
     author: "Robert C. Martin",
     url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
   }
   
-  const returnedBlog = await api.post('/api/blogs').send(newBlog)
+  const returnedBlog = await api.post('/api/blogs').send(newBlogWithoutLikesProp)
   expect(returnedBlog.body.likes).toEqual(0)
 
 })
