@@ -1,3 +1,4 @@
+
 //The app.js file creates the actual (express?) application
 const config = require('./utils/config')
 const logger = require('./utils/logger')
@@ -7,10 +8,11 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
+require('express-async-errors') //must be required before I use it (obviously)
 const notesRouter = require('./controllers/notes')
 const mongoose = require('mongoose')
 
-require('express-async-errors')
+
 
 
 //The responsibility of establishing the connection to the database has been given to the app.js module

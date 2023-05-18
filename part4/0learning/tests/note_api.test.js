@@ -13,18 +13,70 @@ const helper = require('./test_helper')
 //Let's initialize the database before every test with the beforeEach function:
 // beforeEach is run before each test in a describe block, while beforeAll is run once before all the tests, or if put in a in a describe block, then before these tests (I could have 2 in 2 desc blocks)
 //so if I have few describe blocks in a file, it will run that many times as many times I have describe block. (at least according to bing)
-beforeEach(async () => {
+
+/*beforeEach(async () => {
   await Note.deleteMany({})
 
   let noteObject = new Note(helper.initialNotes[0])
   await noteObject.save()
+
   noteObject = new Note(helper.initialNotes[1])
   await noteObject.save()
+})  */
+/* beforeEach(async () => {
+  await Note.deleteMany({})
+  console.log('cleared') //using console even tough we tried to implement logger - I would just implement tester-logger, but meh, let's go with the course
+
+  helper.initialNotes.forEach(async (note) => {
+    let noteObject = new Note(note)
+    await noteObject.save()
+    console.log('saved')
+  })
+  console.log('done')
+  /*
+  "cleared
+  done
+  entered test
+  saved
+  saved""
+  The problem is that every iteration of the forEach loop generates an asynchronous operation, and beforeEach won't wait for them to finish executing. 
+  In other words, the await commands defined inside of the forEach loop are not in the beforeEach function, but in separate functions that beforeEach will not wait for.
+})
+*/
+/*beforeEach(async () => {
+  await Note.deleteMany({})
+  
+  const noteObjects = helper.initialNotes.map(note => new Note(note))
+  const promiseArray = noteObjects.map(note => note.save())
+  await Promise.all(promiseArray)
+  //The Promise.all method can be used for transforming an array of promises into a single promise, that will be fulfilled once every promise in the array passed to it as a parameter is resolved. 
+  //but with that approach we have a problem, because this "const promiseArray = noteObjects.map(note => note.save())" makes promises run in paralell (on the fullstackopen the wording is wrong, as it states that )
+    //the pararellism has something to do with Promise.all, while it does not.
+  //this may cause issues if I needed first promise to resolve before the second one.
+})*/
+
+beforeEach(async () => {
+  await Note.deleteMany({})
+  //console.log('cleared') //using console even tough we tried to implement logger - I would just implement tester-logger, but meh, let's go with the course
+
+  //we basically need to change our 2nd approach from forEach into for loop. More info below.
+  for(let note of helper.initialNotes) {
+    let noteObject = new Note(note)
+    await noteObject.save()
+    //console.log('saved')
+  }
+  //console.log('done')
+  /*The behavior of await is specific to the for loop and the for...of loop. Other loops, such as forEach, map, filter, etc., 
+  do not work well with await, because they are not designed to handle asynchronous operations. They will not wait for the promises to finish,
+  and they will return an array of promises instead of an array of values. If you want to use await with other loops,
+  you need to use Promise.all or another method to wait for the promises to finish. 
+  (but even when using Promise.all I would still then have the promises run in parallel)
+  */
 })
 
 
-
 test('get /api/notes - notes are returned as json', async () => {
+  //console.log('entered test')
   await api
     .get('/api/notes')
     .expect(200)
