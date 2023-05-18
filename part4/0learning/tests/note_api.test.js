@@ -54,8 +54,7 @@ const helper = require('./test_helper')
     //the pararellism has something to do with Promise.all, while it does not.
   //this may cause issues if I needed first promise to resolve before the second one.
 })*/
-
-beforeEach(async () => {
+/*beforeEach(async () => {
   await Note.deleteMany({})
   //console.log('cleared') //using console even tough we tried to implement logger - I would just implement tester-logger, but meh, let's go with the course
 
@@ -71,36 +70,56 @@ beforeEach(async () => {
   and they will return an array of promises instead of an array of values. If you want to use await with other loops,
   you need to use Promise.all or another method to wait for the promises to finish. 
   (but even when using Promise.all I would still then have the promises run in parallel)
-  */
+}) */
+
+beforeEach(async () => {
+  await Note.deleteMany({})
+  await Note.insertMany(helper.initialNotes)  
+   
+})
+
+describe('when there is initially some notes saved', () => {
+  test('get /api/notes - notes are returned as json', async () => {
+    //console.log('entered test')
+    await api
+      .get('/api/notes')
+      .expect(200)
+      .expect('Content-Type', /application\/json/) //methods provided by supertest for verifying the status code and headers
+    //if we were to use ".expect('Content-Type', 'application/json')", the value would have to be EXACTLY like that, while that regex above allows the header CONTAIN the value
+    //The actual value of the header is application/json; charset=utf-8, 
+  })
+  
+  
+  test('get /api/notes - all notes are returned', async () => {
+    const response = await api.get('/api/notes')
+    // execution gets below only after the HTTP request is complete
+    expect(response.body).toHaveLength(helper.initialNotes.length)
+  })
+  
+  
+  test('get /api/notes - a specific note is within the returned notes', async () => {
+    const response = await api.get('/api/notes')
+  
+    const contents = response.body.map(n => n.content) //return array
+    expect(contents).toContain('Browser can execute only JavaScript')
+    //Use .toContain when you want to check that an item is in an array
+  })
 })
 
 
-test('get /api/notes - notes are returned as json', async () => {
-  //console.log('entered test')
-  await api
-    .get('/api/notes')
+//==============================================================================================================================
+test('get /api/notes:id a specific note can be viewed', async () => {
+  const notesAtStart = await helper.notesInDb()
+
+  const noteToView = notesAtStart[0]
+
+  const resultNote = await api
+    .get(`/api/notes/${noteToView.id}`)
     .expect(200)
-    .expect('Content-Type', /application\/json/) //methods provided by supertest for verifying the status code and headers
-  //if we were to use ".expect('Content-Type', 'application/json')", the value would have to be EXACTLY like that, while that regex above allows the header CONTAIN the value
-  //The actual value of the header is application/json; charset=utf-8, 
+    .expect('Content-Type', /application\/json/)
+  
+    expect(resultNote.body).toEqual(noteToView)
 })
-
-
-test('get /api/notes - all notes are returned', async () => {
-  const response = await api.get('/api/notes')
-  // execution gets below only after the HTTP request is complete
-  expect(response.body).toHaveLength(helper.initialNotes.length)
-})
-
-
-test('get /api/notes - a specific note is within the returned notes', async () => {
-  const response = await api.get('/api/notes')
-
-  const contents = response.body.map(n => n.content) //return array
-  expect(contents).toContain('Browser can execute only JavaScript')
-  //Use .toContain when you want to check that an item is in an array
-})
-
 
 //==============================================================================================================================
 test('post /api/notes - a valid note can be added', async () => {
@@ -141,22 +160,7 @@ test('post /api/notes - note without content is not added', async () => {
 })
 
 
-//==============================================================================================================================
-test('a specific note can be viewed', async () => {
-  const notesAtStart = await helper.notesInDb()
-
-  const noteToView = notesAtStart[0]
-
-  const resultNote = await api
-    .get(`/api/notes/${noteToView.id}`)
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-  
-    expect(resultNote.body).toEqual(noteToView)
-})
-
-
-test('a note can be deleted', async () => {
+test('delete /api/notes/:id - a note can be deleted', async () => {
   const notesAtStart = await helper.notesInDb()
   const noteToDelete = notesAtStart[0]
 
