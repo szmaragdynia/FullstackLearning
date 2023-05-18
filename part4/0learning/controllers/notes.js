@@ -14,7 +14,7 @@ notesRouter.get('/', async (request, response) => {
 })
 
 
-notesRouter.get('/:id', (request, response, next) => {
+/*notesRouter.get('/:id', (request, response, next) => {
   Note.findById(request.params.id).then(note => {
     if (note) {
       response.json(note)
@@ -22,17 +22,37 @@ notesRouter.get('/:id', (request, response, next) => {
       response.status(404).end()
     }
   }).catch(error => next(error)) //If next was called without a parameter, then the execution would simply move onto the next route or middleware. If the next function is called with a parameter, then the execution will continue to the error handler middleware.)
+}) */
+
+notesRouter.get('/:id', async (request, response, next) => {
+  try {  
+    const note = await Note.findById(request.params.id)
+    if (note) {
+      response.json(note)
+    } else {  //case for properly formed id's, but with no note with such id
+      response.status(404).end()
+    }
+  } catch(exception) {
+    next(exception)
+  }
 })
 
-
-notesRouter.delete('/:id', (request, response, next) => {
+/*notesRouter.delete('/:id', (request, response, next) => {
   Note.findByIdAndRemove(request.params.id)
     .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
-})
+}) */
 
+notesRouter.delete('/:id', async (request, response, next) => {
+  try {
+    await Note.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+  } catch(exception) {
+    next(exception)
+  }
+})
 
 /*notesRouter.post('/', (request, response, next) => {
   const note = new Note ({
@@ -53,11 +73,12 @@ notesRouter.post('/', async (request, response, next) => {
     important: request.body.important || false,
   })
 
-  const savedNote = await note.save()
-  response.status(201).json(savedNote)
-  
-  //what with error handling?
-  //.catch(error => next(error))
+  try {
+    const savedNote = await note.save()
+    response.status(201).json(savedNote)
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 
