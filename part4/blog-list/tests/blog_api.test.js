@@ -42,7 +42,7 @@ describe('get', () => {
 })
 
 describe.only('delete', () => {
-  test('delete /api/blogs/:id, when exists and id is valid', async () => {
+  test('delete /api/blogs/:id,succeeds with status code 204 when id is valid', async () => {
     const blogsBeforeDeletion = await helper.blogsInDb()
     blogToDelete = blogsBeforeDeletion[0]
         
@@ -54,23 +54,29 @@ describe.only('delete', () => {
     expect(blogsAfterDeletion).toHaveLength(blogsBeforeDeletion.length - 1)
 
     expect(blogsAfterDeletion).not.toContain(blogToDelete)
-
-    //check for invalid id
+    /*
+    I could also do it like that:
+      "const contents = blogsBeforeDeletion.map(b => b.content)
+      expect(contents).not.toContain(blogToDelete.title)"
+    Which should I choose? Bing says:
+      "Checking for the existence of the item is more reliable and thorough, but it requires comparing the whole object, which might be complex or unnecessary. 
+      For example, if the item has many properties that are irrelevant for your test, such as timestamps or ids, you might not care about them.
+      Checking for a specific property of the item is more precise and flexible, but it requires mapping that property and knowing its value beforehand. 
+        (PG: I also must know that it was required, and that all db items have the required fields)
+      For example, if the property is dynamic or unpredictable, such as a random string or a hash, you might not be able to check for it easily."
+    */
   })
 
-  test('delete /api/blogs/:id, when invalid id is given', async () => {
+  test('delete /api/blogs/:id, fails with status code 400 when invalid id is invalid', async () => {
+    const blogsBeforeDeletion = await helper.blogsInDb()
     const invalidId = 500 //magic number
-        
+
     await api
-      .delete(`/api/blogs/${blogToDelete.id}`)
-      .expect(204)
-    
+      .delete(`/api/blogs/${invalidId}`)
+      .expect(400)
+
     const blogsAfterDeletion = await helper.blogsInDb()
-    expect(blogsAfterDeletion).toHaveLength(blogsBeforeDeletion.length - 1)
-
-    expect(blogsAfterDeletion).not.toContain(blogToDelete)
-
-    //check for invalid id
+    expect(blogsAfterDeletion).toHaveLength(blogsBeforeDeletion.length)
   })
 
 })
