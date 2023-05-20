@@ -17,8 +17,9 @@ beforeEach( async () => {
   }
 })
 
-
-describe('get', () => {
+//================================================================================================
+//================================================================================================
+describe('get /api/blogs', () => {
   test('GET /api/blogs - if returned  AND in correct format', async () => {
     await api
     .get('/api/blogs')
@@ -41,7 +42,8 @@ describe('get', () => {
   })
 })
 
-describe.only('delete', () => {
+//================================================================================================
+describe('delete /api/blogs/:id', () => {
   test('delete /api/blogs/:id,succeeds with status code 204 when id is valid', async () => {
     const blogsBeforeDeletion = await helper.blogsInDb()
     blogToDelete = blogsBeforeDeletion[0]
@@ -80,7 +82,6 @@ describe.only('delete', () => {
   })
 
 })
-
 
 //================================================================================================
 describe('POST /api/blogs', () => {
@@ -147,6 +148,58 @@ describe('POST /api/blogs', () => {
   })
 })
 
+//================================================================================================
+describe('put /api/blogs/:id', () => {
+  test('put /api/blogs/:id - succeeds with statuscode 200 when id is valid', async () => {
+    const blogsBeforeUpdate = await helper.blogsInDb()
+
+    const updatedBlog = {
+      title: "test title",
+      author: "test author",
+      url: "test url",
+      likes: 12345678
+    }
+    
+    //if the update changes something
+    expect(blogsBeforeUpdate[0]).not.toBe(updatedBlog)
+
+    //if is processed successfully
+    const returnedBlog = await api 
+      .put(`/api/blogs/${blogsBeforeUpdate[0].id}`)
+      .send(updatedBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+    
+    updatedBlog.id = returnedBlog.body.id
+    
+    //if change is applied
+    const blogsAfterUpdate = await helper.blogsInDb()
+    expect(blogsAfterUpdate[0]).toEqual(updatedBlog)
+  })
+
+  test('put /api/blogs/:id - fails with statuscode 400 when id is invalid', async () => {
+    const invalidID = 500 //magic number
+    const blogsBeforeUpdate = await helper.blogsInDb()
+
+    const updatedBlog = {
+      title: "test title",
+      author: "test author",
+      url: "test url",
+      likes: 12345678
+    }
+    
+    //if is processed successfully
+    await api 
+      .put(`/api/blogs/${invalidID}`)
+      .send(updatedBlog)
+      .expect(400)
+    
+    //if nothing changed
+    const blogsAfterUpdate = await helper.blogsInDb()
+    expect(blogsBeforeUpdate).toEqual(blogsAfterUpdate)
+  })
+
+})
 
 
 
