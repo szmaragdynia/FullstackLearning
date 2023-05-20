@@ -78,7 +78,7 @@ beforeEach(async () => {
    
 })
 
-describe('when there is initially some notes saved', () => {
+describe('get /api/notes - when there is initially some notes saved', () => {
   test('get /api/notes - notes are returned as json', async () => {
     //console.log('entered test')
     await api
@@ -106,74 +106,114 @@ describe('when there is initially some notes saved', () => {
   })
 })
 
+describe('get /api/notes/:id - viewing a specific note', () => {
+  test('get /api/notes/:id - succeeds with a valid id', async () => {
+    const notesAtStart = await helper.notesInDb()
 
-//==============================================================================================================================
-test('get /api/notes:id a specific note can be viewed', async () => {
-  const notesAtStart = await helper.notesInDb()
+    const noteToView = notesAtStart[0]
 
-  const noteToView = notesAtStart[0]
+    const resultNote = await api
+      .get(`/api/notes/${noteToView.id}`)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+    
+      expect(resultNote.body).toEqual(noteToView)
+  })
 
-  const resultNote = await api
-    .get(`/api/notes/${noteToView.id}`)
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-  
-    expect(resultNote.body).toEqual(noteToView)
+  test('get /api/notes/:id - fails with statuscode 404 if note does not exist', async () => {
+
+    const validNonExistingId = await helper.nonExistingId() 
+    /* when there is no 'await' not only this fails, but also test with delete fails
+    That is because jest still runs all the tests. And the error I get
+    "MongoNotConnectedError: Client must be connected before running operations" might be due to either closing connection to early, 
+      or having async operations without waiting for them to finish (which happens here) - connection is not ready
+    -"When you use test.only in a test, Jest will only run that test and skip the others. However, it will still execute the code in the other tests, such as importing modules or calling functions. 
+    This means that if you have some code in another test that affects the global state or the database, it may still run and cause an error in the test with test.only. 
+    For example, if you have a test that deletes a note from the database, but you use test.only in another test that tries to get that note, you may get an error because the note does not exist anymore."
+    -"To avoid this problem, you should use describe.only instead of test.only to isolate a group of tests that are related to each other. 
+    This way, Jest will only execute the code and run the tests inside that group, and ignore the rest."
+    ------------
+    But is still behaves wildly:  
+      1. if 'describe.only' is used, I get a connection error without regard to the file
+      2. If no .only is used, I just get that "400 bad request" was returned, while "404" was expected
+      3. if test.only is used, I get the "2" and connection error in regards to 'delete' test, lol. 
+        I thoguht maybe it tries to run next code and just then the error from previous call happens, but 'delete' is after some tests.
+        No idea. Not needed now, let's not waste time. I know the bug's cause, I just don;t understand what happens - we will take a look at that later
+    */
+    await api
+      .get(`/api/notes/${validNonExistingId}`)
+      .expect(404)
+  })
+
+  test('get /api/notes/:id - fails with statuscode 400 if id is invalid', async () => {
+    const invalidId = 500
+
+    await api
+      .get(`/api/notes/invalidId`)
+      .expect(400)
+  })
 })
 
 //==============================================================================================================================
-test('post /api/notes - a valid note can be added', async () => {
-  const newNote = {
-    content: 'async/await simplifies making async calls',
-    important: true
-  }
-
-  await api
-    .post('/api/notes')
-    .send(newNote)
-    .expect(201)
-    .expect('Content-Type', /application\/json/)
-
-  //const response = await api.get('/api/notes')
-  const notesAtEnd = await helper.notesInDb()
-  expect(notesAtEnd).toHaveLength(helper.initialNotes.length + 1) //testing if the number of notes returned increases
+describe('post /api/notes - addition of a new note', () => {
+  test('post /api/notes - succeeds with valid data', async () => {
+    const newNote = {
+      content: 'async/await simplifies making async calls',
+      important: true
+    }
   
-  const contents = notesAtEnd.map(n => n.content)
-  expect(contents).toContain('async/await simplifies making async calls')
+    await api
+      .post('/api/notes')
+      .send(newNote)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+  
+    //const response = await api.get('/api/notes')
+    const notesAtEnd = await helper.notesInDb()
+    expect(notesAtEnd).toHaveLength(helper.initialNotes.length + 1) //testing if the number of notes returned increases
+    
+    const contents = notesAtEnd.map(n => n.content)
+    expect(contents).toContain('async/await simplifies making async calls')
+  })
+
+  test('post /api/notes - fails with status code 400 if data invalid', async () => {
+    const newNote = {
+      important: true
+    }
+    
+    await api
+      .post('/api/notes')
+      .send(newNote)
+      .expect(400)
+    
+    //const response = await api.get('/api/notes')
+    const notesAtEnd = await helper.notesInDb()
+    expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
+  })
+})
+
+//==============================================================================================================================
+describe('delete /api/notes/:id - deletion of a note', () => {
+  test('delete /api/notes/:id - succeeds with status code 204 if id is valid', async () => {
+    const notesAtStart = await helper.notesInDb()
+    const noteToDelete = notesAtStart[0]
+  
+    await api
+      .delete(`/api/notes/${noteToDelete.id}`)
+      .expect(204)
+  
+    const notesAtEnd = await helper.notesInDb()
+    //expect(notesAtEnd).toHaveLength(helper.initialNotes.length - 1) // that was in the course, but seems silly
+    expect(notesAtEnd).toHaveLength(notesAtStart.length - 1) 
+  
+    const contents = notesAtEnd.map(r => r.content)
+    expect(contents).not.toContain(noteToDelete.content)
+  })
+
 })
 
 
-test('post /api/notes - note without content is not added', async () => {
-  const newNote = {
-    important: true
-  }
-  
-  await api
-    .post('/api/notes')
-    .send(newNote)
-    .expect(400)
-  
-  //const response = await api.get('/api/notes')
-  const notesAtEnd = await helper.notesInDb()
-  expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
-  
-})
 
-
-test('delete /api/notes/:id - a note can be deleted', async () => {
-  const notesAtStart = await helper.notesInDb()
-  const noteToDelete = notesAtStart[0]
-
-  await api
-    .delete(`/api/notes/${noteToDelete.id}`)
-    .expect(204)
-
-  const notesAtEnd = await helper.notesInDb()
-  expect(notesAtEnd).toHaveLength(helper.initialNotes.length - 1)
-
-  const contents = notesAtEnd.map(r => r.content)
-  expect(contents).not.toContain(noteToDelete.content)
-})
 
 
 
